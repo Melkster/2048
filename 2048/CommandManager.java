@@ -26,9 +26,9 @@ public class CommandManager {
      */
      public void undoCommand() {
      	assert(!undoStack.empty());
-        Command c = undoStack.pop();
-        c.undo();
-        redos.push(c);
+        Command command = undoStack.pop();
+        command.undo();
+        redos.push(command);
     }
 
     //Checks if there is at least one undoable Command available on the undo list.
@@ -39,9 +39,9 @@ public class CommandManager {
 	//Redoes the next available command to redo.
    	public void redoCommand() {
         assert(!redoStack.empty());
-        Command c redoStack.pop();
-        c.execute();
-        undoStack.push(c);
+        Command command redoStack.pop();
+        command.execute();
+        undoStack.push(command);
     }
 }
  
