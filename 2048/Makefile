@@ -1,23 +1,14 @@
-JFLAGS = -g
-JC = javac
-JVM= java
-FILE=
-.SUFFIXES: .java .class
-.java.class:
-	$(JC) $(JFLAGS) $*.java
-CLASSES = \
-	GameBoard.java \
-	Settings.java \
-	Game.java
+CLASSPATH = -cp classes:./junit/junit-4.12.jar:./junit/hamcrest-core-1.3.jar:.
+JC = javac -d classes 
+J = java -classpath classes
 
-MAIN = Game
+install:
+	mkdir classes
 
-default: classes
-
-classes: $(CLASSES:.java=.class)
-
-run: $(MAIN).class
-	$(JVM) $(MAIN)
+run: *.java
+	$(JC) $^
+	$(J) Game
 
 clean:
-	$(RM) *.class
+	rm -f ./classes/*.class
+
