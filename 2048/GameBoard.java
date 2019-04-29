@@ -32,7 +32,7 @@ public class GameBoard extends JPanel
     public int getStartX() {
         return this.startX;
     }
-    
+
     public int getStartY() {
         return this.startY;
     }
@@ -67,7 +67,7 @@ public class GameBoard extends JPanel
 
         // Draw The Information String
         Graphics2D g2d = (Graphics2D) g;
-        
+
         // Set the desired font if different from default font
         Font font = new Font("Serif", Font.PLAIN, 20);
         g2d.setFont(font);

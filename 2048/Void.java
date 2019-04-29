@@ -1,7 +1,11 @@
 public class Void extends Tile {
 
+    public Void() {
+        super(0);
+    }
+
     public void draw() {
-        // TODO 
+        // TODO
     }
 
     public void increment() {}
@@ -9,4 +13,3 @@ public class Void extends Tile {
     public void decrement() {}
 
 }
-
