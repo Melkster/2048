@@ -1,8 +1,8 @@
 import java.lang.*;
 // Any number of import statements
 
-public interface Commands {
-   public void do();
-   public void undo();
-   public void redo();
+public interface Command {
+    public void execute();
+    public void undo();
+    public void redo();
 }
