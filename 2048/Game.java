@@ -57,7 +57,7 @@ public class Game extends JFrame implements MouseListener {
 
     //Calls undo function in CommandManager.
     public void undo() {
-        commandManager.undo();
+        commandManager.undoCommand();
     }
 
     //Checks if redo is available in CommandManager.
@@ -67,7 +67,7 @@ public class Game extends JFrame implements MouseListener {
 
     //Calls redo function in CommandManager.
     public void redo() {
-        commandManager.redo();
+        commandManager.redoCommand();
     }
     
 
