@@ -57,13 +57,13 @@ public class Game extends JFrame implements MouseListener {
                 commandManager.execute(new Swipe(Direction.UP));
                 break;
             case KeyEvent.VK_DOWN: 
-                commanManager.execute(new Swipe(Direction.DOWN));
+                commandManager.execute(new Swipe(Direction.DOWN));
                 break;
             case KeyEvent.VK_RIGHT: 
-                commanManager.execute(new Swipe(Direction.RIGHT));
+                commandManager.execute(new Swipe(Direction.RIGHT));
                 break;
             case KeyEvent.VK_LEFT: 
-                commanManager.execute(new Swipe(Direction.LEFT));
+                commandManager.execute(new Swipe(Direction.LEFT));
                 break;
         }
     }
