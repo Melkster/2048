@@ -1,17 +1,13 @@
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 
-public class GameBoard extends JPanel
+public class GameBoard extends JLabel
 {
     private int startX = 0;
     private int startY = 0;
     private int size = 0;
 
-    private int settingX = 0;
-    private int settingY = 0;
-    private int settingSize = 0;
-
-    public GameBoard() {
+    public GameBoard(String text, Point origin) {
         int width = getWidth();
         int height = getHeight();
         int recHei = height / 8;
@@ -19,10 +15,6 @@ public class GameBoard extends JPanel
         startX = ((width/2)-((recHei*4+50)/2));
         startY = ((height/2)-((recHei*4+50)/2));
         size = ((recHei*4)+50);
-
-        settingSize = recHei/2;
-        settingX = 50;
-        settingY = 50;
     }
 
     public int getGameBoardSize() {
@@ -32,7 +24,7 @@ public class GameBoard extends JPanel
     public int getStartX() {
         return this.startX;
     }
-    
+
     public int getStartY() {
         return this.startY;
     }
@@ -40,16 +32,6 @@ public class GameBoard extends JPanel
     public Boolean checkInsideGB(int x, int y) {
         if ((x > this.startX) && (x < this.startX+this.size)) {
             if ((y > this.startY+30) && (y < this.startY+this.size+30)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public Boolean checkInsideSetting(int x, int y) {
-        if ((x > this.settingX) && (x < this.settingX+this.settingSize)) {
-            if ((y > this.settingY+30) && (y < this.settingY+this.settingSize+30)) {
                 return true;
             }
         }
@@ -67,7 +49,7 @@ public class GameBoard extends JPanel
 
         // Draw The Information String
         Graphics2D g2d = (Graphics2D) g;
-        
+
         // Set the desired font if different from default font
         Font font = new Font("Serif", Font.PLAIN, 20);
         g2d.setFont(font);
@@ -80,11 +62,6 @@ public class GameBoard extends JPanel
         this.startY = ((height/2)-((recHei*4+50)/2));
 
         this.size = ((recHei*4)+50);
-        this.settingSize = recHei/2;
-
-        this.settingX = ((width/3)/2)-this.settingSize;
-
-        g.drawRect(this.settingX, this.settingY, this.settingSize, this.settingSize);
 
         g.drawRect(startX, startY, this.size, this.size);
 
