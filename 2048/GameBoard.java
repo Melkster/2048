@@ -1,17 +1,27 @@
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 
-public class GameBoard extends JPanel
+public class GameBoard extends JLabel
 {
     private int startX = 0;
     private int startY = 0;
     private int size = 0;
 
-    private int settingX = 0;
-    private int settingY = 0;
-    private int settingSize = 0;
+    public GameBoard(String text, Point origin) {
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-    public GameBoard() {
+        JLabel label = new JLabel(text);
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setOpaque(true);
+        label.setBackground(Color.WHITE);
+        label.setForeground(Color.black);
+        label.setBorder(BorderFactory.createLineBorder(Color.black));
+        label.setBounds(origin.x+150, origin.y, 100, 100);
+        
+        add(Box.createRigidArea(new Dimension(0, 10)));
+        add(label);
+
         int width = getWidth();
         int height = getHeight();
         int recHei = height / 8;
@@ -19,10 +29,6 @@ public class GameBoard extends JPanel
         startX = ((width/2)-((recHei*4+50)/2));
         startY = ((height/2)-((recHei*4+50)/2));
         size = ((recHei*4)+50);
-
-        settingSize = recHei/2;
-        settingX = 50;
-        settingY = 50;
     }
 
     public int getGameBoardSize() {
@@ -47,17 +53,7 @@ public class GameBoard extends JPanel
         return false;
     }
 
-    public Boolean checkInsideSetting(int x, int y) {
-        if ((x > this.settingX) && (x < this.settingX+this.settingSize)) {
-            if ((y > this.settingY+30) && (y < this.settingY+this.settingSize+30)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void paintComponent(Graphics g)
+    /*public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
 
@@ -80,11 +76,6 @@ public class GameBoard extends JPanel
         this.startY = ((height/2)-((recHei*4+50)/2));
 
         this.size = ((recHei*4)+50);
-        this.settingSize = recHei/2;
-
-        this.settingX = ((width/3)/2)-this.settingSize;
-
-        g.drawRect(this.settingX, this.settingY, this.settingSize, this.settingSize);
 
         g.drawRect(startX, startY, this.size, this.size);
 
@@ -94,5 +85,5 @@ public class GameBoard extends JPanel
                 g.drawRect(((startX+10)+(recHei+10)*i), ((startY+10)+(recHei+10)*k), recHei, recHei);
             }
         }
-    }
+    }*/
 }
