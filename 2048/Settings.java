@@ -9,20 +9,6 @@ public class Settings extends JLabel
     private int settingSize;
 
     public Settings(String text, Point origin) {
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-        JLabel label = new JLabel(text);
-        label.setVerticalAlignment(JLabel.CENTER);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setOpaque(true);
-        label.setBackground(Color.WHITE);
-        label.setForeground(Color.black);
-        label.setBorder(BorderFactory.createLineBorder(Color.black));
-        label.setBounds(origin.x+25, origin.y+25, 40, 40);
-        
-        add(Box.createRigidArea(new Dimension(0, 10)));
-        add(label);
-
         this.settingX = origin.x;
         this.settingY = origin.y;
         this.settingSize = 50;
@@ -38,7 +24,7 @@ public class Settings extends JLabel
         return false;
     }
 
-    /*public void paintComponent(Graphics g)
+    public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
 
@@ -47,8 +33,14 @@ public class Settings extends JLabel
         int recWid = width / 8;
         int recHei = height / 8;
 
-        //g.drawRect(RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT);
+        Graphics2D g2d = (Graphics2D) g;
 
-        g.drawRect(10, 10, (recWid*2), (recHei*2));
-    }*/
+        // Set the desired font if different from default font
+        Font font = new Font("Serif", Font.PLAIN, 15);
+        g2d.setFont(font);
+
+        // Draw a string such that its base line is at x, y
+        g2d.drawString("Settings", width/6, height/2);
+        FontMetrics fontMetrics = g2d.getFontMetrics();
+    }
 }

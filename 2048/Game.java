@@ -12,6 +12,8 @@ public class Game extends JFrame implements ActionListener,
     private GameBoard gb;
     private Settings st;
 
+    private TrialPane tp;
+
     private CommandManager commandManager;
 
     public Game() {
@@ -28,30 +30,27 @@ public class Game extends JFrame implements ActionListener,
         //this.gb = new GameBoard("GameBoard", Color.yellow, origin1);
         //this.st = new Settings("Settings", Color.black, origin2);
         
-        TrialPane special = new TrialPane();
-        special.setOpaque(true);
-        this.setContentPane(special);
-
-        //basePlatform.add(this.gb, 3);
-        //basePlatform.add(this.st, 4);
-        
-        //this.add(basePlatform);
-
-        commandManager = new CommandManager();
-
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int) screenSize.getWidth();
+
+        this.setBackground(Color.WHITE);
 
         this.setLocation(((width/2)- 400),100);
         this.setMinimumSize(new Dimension(500, 500));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        width = getWidth();
+        int height = getHeight();
+        int recHei = height / 8;
+
+        tp = new TrialPane(width);
+        tp.setOpaque(true);
+        this.setContentPane(tp);
+
+        commandManager = new CommandManager();
         
         this.pack();
         this.setVisible(true);
-    }
-
-    public GameBoard getGameBoard() {
-        return this.gb;
     }
 
     @Override

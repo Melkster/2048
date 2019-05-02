@@ -8,20 +8,6 @@ public class GameBoard extends JLabel
     private int size = 0;
 
     public GameBoard(String text, Point origin) {
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-        JLabel label = new JLabel(text);
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setOpaque(true);
-        label.setBackground(Color.WHITE);
-        label.setForeground(Color.black);
-        label.setBorder(BorderFactory.createLineBorder(Color.black));
-        label.setBounds(origin.x+150, origin.y, 100, 100);
-        
-        add(Box.createRigidArea(new Dimension(0, 10)));
-        add(label);
-
         int width = getWidth();
         int height = getHeight();
         int recHei = height / 8;
@@ -53,7 +39,7 @@ public class GameBoard extends JLabel
         return false;
     }
 
-    /*public void paintComponent(Graphics g)
+    public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
 
@@ -85,5 +71,5 @@ public class GameBoard extends JLabel
                 g.drawRect(((startX+10)+(recHei+10)*i), ((startY+10)+(recHei+10)*k), recHei, recHei);
             }
         }
-    }*/
+    }
 }
