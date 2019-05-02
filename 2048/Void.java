@@ -4,9 +4,7 @@ public class Void extends Tile {
         super(0);
     }
 
-    public void draw() {
-        // TODO
-    }
+    public void draw() {}
 
     public void increment() {}
 

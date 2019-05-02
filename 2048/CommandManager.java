@@ -3,11 +3,11 @@ import java.awt.*;
 import java.util.Stack;
 
 public class CommandManager {
- 
+
     private Stack<Command> undoStack = new Stack<Command>();
     private Stack<Command> redoStack = new Stack<Command>();
 
- 
+
  	//Executes a Command instance and adds it to the list of undos that are available.
     public void executeCommand(Command command) {
         command.execute();
@@ -20,8 +20,8 @@ public class CommandManager {
         return !undoStack.empty();
     }
 
-    /** Undoes the next available command to undo. 
-     * If four commands were executed, the undo operations for those commands will 
+    /** Undoes the next available command to undo.
+     * If four commands were executed, the undo operations for those commands will
      * happen in reverse order with four calls to this method.
      */
      public void undoCommand() {
@@ -44,4 +44,3 @@ public class CommandManager {
         undoStack.push(command);
     }
 }
- 
