@@ -40,8 +40,16 @@ public class TrialPane extends JPanel {
         this.st.setBorder(BorderFactory.createLineBorder(Color.black));
         this.st.setBounds(origin1.x, origin1.y, 100, 60);
 
-        layeredPane.add(this.gb, 0);
-        layeredPane.add(this.st, 0);
+        JLabel test = new JLabel();
+        test.setOpaque(true);
+        test.setBackground(new Color(0,0,0,90));
+        test.setForeground(Color.black);
+        test.setBorder(BorderFactory.createLineBorder(Color.black));
+        test.setBounds(origin2.x+40, origin2.y+40, 30, 30);
+
+        layeredPane.add(this.gb, 4);
+        layeredPane.add(this.st, 4);
+        layeredPane.add(test, 0);
 
         add(Box.createRigidArea(new Dimension(0, 10)));
         add(layeredPane);
