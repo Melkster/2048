@@ -70,6 +70,24 @@ public class Game extends JFrame implements ActionListener,
         }
     }
  
+
+        public void keyPressed(KeyEvent arrow){
+        switch (arrow.getKeyCode()){
+            case KeyEvent.VK_UP:
+                commandManager.execute(new Swipe(Direction.UP));
+                break;
+            case KeyEvent.VK_DOWN: 
+                commandManager.execute(new Swipe(Direction.DOWN));
+                break;
+            case KeyEvent.VK_RIGHT: 
+                commandManager.execute(new Swipe(Direction.RIGHT));
+                break;
+            case KeyEvent.VK_LEFT: 
+                commandManager.execute(new Swipe(Direction.LEFT));
+                break;
+        }
+    }
+    
     //Checks if undo is available in CommandManager.
     public boolean isUndoAvailable() {
         return commandManager.isUndoAvailable();
