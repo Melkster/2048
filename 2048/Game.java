@@ -50,6 +50,24 @@ public class Game extends JFrame implements MouseListener {
         }
     }
  
+
+        public void keyPressed(KeyEvent arrow){
+        switch (arrow.getKeyCode()){
+            case KeyEvent.VK_UP:
+                commandManager.execute(new Swipe(Direction.UP));
+                break;
+            case KeyEvent.VK_DOWN: 
+                commanManager.execute(new Swipe(Direction.DOWN));
+                break;
+            case KeyEvent.VK_RIGHT: 
+                commanManager.execute(new Swipe(Direction.RIGHT));
+                break;
+            case KeyEvent.VK_LEFT: 
+                commanManager.execute(new Swipe(Direction.LEFT));
+                break;
+        }
+    }
+    
     //Checks if undo is available in CommandManager.
     public boolean isUndoAvailable() {
         return commandManager.isUndoAvailable();
