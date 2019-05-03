@@ -1,8 +1,11 @@
 class Swipe implements Command  {
     public Direction direction;
+    private State previousState;
+    private State newState;
 
-    public Swipe(Direction direction) {
+    public Swipe(Direction direction, State state) {
         this.direction = direction;
+        this.previousState = state;
     }
 
     @Override
@@ -19,4 +22,6 @@ class Swipe implements Command  {
     public void redo() {
         // TODO
     }
+
+    private void collide(Tile tile1, Tile tile2)
 }
