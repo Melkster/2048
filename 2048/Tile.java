@@ -1,13 +1,19 @@
 import java.awt.*;
 
 public class Tile implements CustGraphics {
-    int value;
+    public int value;
+    public int column;
+    public int row;
 
-    public Tile(int value) {
+    public Tile(int value, int column, int row) {
         this.value = value;
+        this.column = column;
+        this.row = row;
     }
 
     public void draw(int x, int y, int width, int height, Graphics graphics) {
+        // TODO: x and y should be calculated by Tile based on `column` and
+        // `row `, instead of passed as arguments
         graphics.drawRect(x, y, width, height);
 
         String text = Integer.toString(this.value);
