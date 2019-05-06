@@ -69,6 +69,13 @@ public class Game extends JFrame implements ActionListener,
             System.out.println("Outside GameBoard and Setting");
         }
     }
+
+    public void move(Direction direction) {
+        // Should use Swipe in `direction`, and then `SpawnTile`
+        // gb.state should as a side effect be updated by the executed commands
+        commandManager.executeCommand(new Swipe(direction, gb.state));
+        commandManager.executeCommand(new SpawnTile(gb.state));
+    }
  
 
         public void keyPressed(KeyEvent arrow){

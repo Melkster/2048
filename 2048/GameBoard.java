@@ -6,6 +6,7 @@ public class GameBoard extends JLabel
     private int startX = 0;
     private int startY = 0;
     private int size = 0;
+    public State state;
 
     public GameBoard(String text, Point origin) {
         int width = getWidth();
