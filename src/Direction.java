@@ -1,6 +1,6 @@
 package src;
 
-enum Direction {
+public enum Direction {
     UP,
     RIGHT,
     DOWN,

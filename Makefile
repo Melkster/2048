@@ -1,6 +1,6 @@
 CLASSPATH = -cp classes:./junit/junit-4.12.jar:./junit/hamcrest-core-1.3.jar:.
-JC = javac -d ./classes
-J = java -classpath ./classes
+JC = javac -d ./src/classes
+J = java -classpath ./src/classes
 
 run: *.java \
 	./src/*.java
