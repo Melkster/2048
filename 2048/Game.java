@@ -6,9 +6,9 @@ import java.awt.*;
 
 public class Game extends JFrame implements ActionListener,
                                             MouseListener {
-	
+
     static GraphicsConfiguration gc;
-    
+
     private GameBoard gb;
     private Settings st;
 
@@ -23,13 +23,13 @@ public class Game extends JFrame implements ActionListener,
         /*JLayeredPane basePlatform = new JLayeredPane();
         basePlatform.setPreferredSize(new Dimension(500, 500));
         basePlatform.addMouseListener(this);
-        
+
         Point origin1 = new Point(50, 50);
         Point origin2 = new Point(300, 300);*/
 
         //this.gb = new GameBoard("GameBoard", Color.yellow, origin1);
         //this.st = new Settings("Settings", Color.black, origin2);
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int) screenSize.getWidth();
 
@@ -48,7 +48,7 @@ public class Game extends JFrame implements ActionListener,
         this.setContentPane(tp);
 
         commandManager = new CommandManager();
-        
+
         this.pack();
         this.setVisible(true);
     }
@@ -57,7 +57,7 @@ public class Game extends JFrame implements ActionListener,
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        
+
         System.out.println("Mouse Clicked at X: " + x + " - Y: " + y);
         if(this.gb.checkInsideGB(x,y)) {
             System.out.println("Inside GameBoard");
@@ -76,25 +76,25 @@ public class Game extends JFrame implements ActionListener,
         commandManager.executeCommand(new Swipe(direction, gb.state));
         commandManager.executeCommand(new SpawnTile(gb.state));
     }
- 
+
 
         public void keyPressed(KeyEvent arrow){
         switch (arrow.getKeyCode()){
             case KeyEvent.VK_UP:
                 commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
                 break;
-            case KeyEvent.VK_DOWN: 
+            case KeyEvent.VK_DOWN:
                 commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
                 break;
-            case KeyEvent.VK_RIGHT: 
+            case KeyEvent.VK_RIGHT:
                 commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
                 break;
-            case KeyEvent.VK_LEFT: 
+            case KeyEvent.VK_LEFT:
                 commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
                 break;
         }
     }
-    
+
     //Checks if undo is available in CommandManager.
     public boolean isUndoAvailable() {
         return commandManager.isUndoAvailable();
@@ -114,17 +114,17 @@ public class Game extends JFrame implements ActionListener,
     public void redo() {
         commandManager.redoCommand();
     }
-    
+
 
     @Override
     public void mouseEntered(MouseEvent e) {}
- 
+
     @Override
     public void mouseExited(MouseEvent e) {}
- 
+
     @Override
     public void mousePressed(MouseEvent e) {}
- 
+
     @Override
     public void mouseReleased(MouseEvent e) {}
 

@@ -12,7 +12,8 @@ class State {
      * Returns the Tile at a position given a `column` and a `row`.
      */
     public Tile getTile(int column, int row) {
-        return layout.get(row).get(column);
+        if (column < 0 || row < 0 || column >= size || row >= size) return null;
+        else return layout.get(row).get(column);
     }
 
     /**
@@ -43,15 +44,15 @@ class State {
             return false;
         } else {
             return layout.get(row).remove(tile);
+            // TODO: add Void to layout
         }
     }
 
     /**
-     * Moves the Tile at a position given a `column` and `row`, to a new
-     * position given `newColumn` and `newRow`. Returns `true` if the move was
-     * executed successfully, otherwise `false`.
+     * Moves `tile`, to a new position given `newColumn` and `newRow`. Returns
+     * `true` if the move was executed successfully, otherwise `false`.
      */
-    public boolean moveTile(int column, int row, int newColumn, int newRow) {
-        // TODO
+    public boolean moveTile(Tile tile, int newColumn, int newRow) {
+        return removeTile(tile.column, tile.row) && addTile(newColumn, newRow, tile);
     }
 }
