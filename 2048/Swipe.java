@@ -1,4 +1,7 @@
-import static Direction.*;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 class Swipe implements Command  {
     private Direction direction;
@@ -13,6 +16,7 @@ class Swipe implements Command  {
     @Override
     public void execute() {
         // TODO
+        // PLAY SOUND SWAP SOUND EVERY SECOND
     }
 
     @Override
@@ -42,5 +46,13 @@ class Swipe implements Command  {
      */
     private void push(Tile tile, Direction direction, State state) {
         // TODO
+    }
+
+    private void playSound(String soundFile) {
+        File f = new File("./" + soundFile);
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());  
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioIn);
+        clip.start();
     }
 }
