@@ -1,3 +1,5 @@
+package src;
+
 /**
  * Spawns a Tile at a random position in `state`, with either the value 2 or 4
  * (chosen randomly).

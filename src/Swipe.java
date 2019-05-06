@@ -1,9 +1,11 @@
+package src;
+
 import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-class Swipe implements Command  {
+public class Swipe implements Command  {
     private Direction direction;
     private State previousState;
     private State newState;
