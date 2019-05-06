@@ -10,4 +10,5 @@ install:
 	mkdir -p classes
 
 clean:
-	rm -f *.class
+	rm -rf *.class \
+	rm -rf ./classes
