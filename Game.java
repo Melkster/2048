@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.event.*;
 import java.awt.*;
 
+import src.*;
+
 public class Game extends JFrame implements ActionListener,
                                             MouseListener {
 	

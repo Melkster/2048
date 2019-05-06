@@ -1,3 +1,5 @@
+package src;
+
 import java.lang.*;
 // Any number of import statements
 

@@ -1,3 +1,5 @@
+package src;
+
 public class Void extends Tile {
 
     public Void(int column, int row) {
