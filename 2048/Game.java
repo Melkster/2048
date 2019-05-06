@@ -81,16 +81,16 @@ public class Game extends JFrame implements ActionListener,
         public void keyPressed(KeyEvent arrow){
         switch (arrow.getKeyCode()){
             case KeyEvent.VK_UP:
-                commandManager.execute(new Swipe(Direction.UP));
+                commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
                 break;
             case KeyEvent.VK_DOWN: 
-                commandManager.execute(new Swipe(Direction.DOWN));
+                commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
                 break;
             case KeyEvent.VK_RIGHT: 
-                commandManager.execute(new Swipe(Direction.RIGHT));
+                commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
                 break;
             case KeyEvent.VK_LEFT: 
-                commandManager.execute(new Swipe(Direction.LEFT));
+                commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
                 break;
         }
     }
