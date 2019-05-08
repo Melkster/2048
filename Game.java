@@ -11,7 +11,7 @@ public class Game extends JFrame implements ActionListener,
 
     static GraphicsConfiguration gc;
 
-    private GameBoard gb;
+    private GameBoard gb = new GameBoard(null, null, 4);
     private Settings st;
 
     private TrialPane tp;
@@ -149,7 +149,7 @@ public class Game extends JFrame implements ActionListener,
     }
 
 	public static void main(String[] args){
-        Game frame= new Game();
+        Game frame = new Game();
         //Settings panel2 = new Settings();
 
         //frame.add(panel2);

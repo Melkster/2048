@@ -33,4 +33,8 @@ public class Tile implements CustGraphics {
         value /= 2;
     }
 
+    @Override
+    public String toString() {
+        return "<" + value + ", " + column + ", " + row + ">";
+    }
 }

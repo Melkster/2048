@@ -12,4 +12,8 @@ public class Void extends Tile {
 
     public void decrement() {}
 
+    @Override
+    public String toString() {
+        return "(" + Integer.toString(column) + ", " + Integer.toHexString(row) + ")";
+    }
 }

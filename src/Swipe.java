@@ -66,9 +66,15 @@ public class Swipe implements Command  {
 
     private void playSound(String soundFile) {
         File f = new File("./" + soundFile);
-        AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioIn);
-        clip.start();
+        Clip clip;
+        AudioInputStream audioIn;
+        try {
+            audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
+            clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,7 +10,8 @@ public class GameBoard extends JLabel
     private int size = 0;
     public State state;
 
-    public GameBoard(String text, Point origin) {
+    public GameBoard(String text, Point origin, int boardSize) {
+        this.state = new State(boardSize);
         int width = getWidth();
         int height = getHeight();
         int recHei = height / 8;
