@@ -2,7 +2,7 @@ package src;
 
 import java.util.*;
 
-class State {
+public class State {
     private ArrayList<ArrayList<Tile>> layout;
     public int size; // Dimensionality of the game board
 
@@ -21,7 +21,8 @@ class State {
     }
 
     /**
-     * Returns the Tile at a position given a `column` and a `row`.
+     * Returns the Tile at a position given a `column` and a `row`. If the
+     * position is outisde `this.layout`, return `null`.
      */
     public Tile getTile(int column, int row) {
         if (column < 0 || row < 0 || column >= size || row >= size) return null;

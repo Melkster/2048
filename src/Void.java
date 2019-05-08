@@ -3,7 +3,7 @@ package src;
 public class Void extends Tile {
 
     public Void(int column, int row) {
-        super(0, column, row);
+        super(column, row, 0);
     }
 
     public void draw() {}
@@ -14,6 +14,6 @@ public class Void extends Tile {
 
     @Override
     public String toString() {
-        return "(" + Integer.toString(column) + ", " + Integer.toHexString(row) + ")";
+        return "[ ]";
     }
 }

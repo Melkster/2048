@@ -43,20 +43,21 @@ public class Swipe implements Command  {
         Tile neighbour;
         do {
             neighbour = neighbourTile(tile, direction, state);
-            if (neighbour == null) return;
-            state.moveTile(tile, neighbour.column, neighbour.row);
-            // TODO?
+            if (neighbour == null) return; // Stop if we reach an edge of the game board
+            if (neighbour instanceof Void) state.moveTile(tile, neighbour.column, neighbour.row);
         } while (neighbour instanceof Void);
     }
 
     /**
-     * Returns the Tile next to `tile` given a `direction` and a `state`.
+     * Returns the Tile next to `tile` in a `direction`, given `state`. If
+     * `tile` is next to an edge and has no neighbour in `direction`, return
+     * `null`.
      */
     private Tile neighbourTile(Tile tile, Direction direction, State state) {
         if (direction == Direction.RIGHT) {
             return state.getTile(tile.column + 1, tile.row);
         } else if (direction == Direction.LEFT) {
-            return state.getTile(tile.column + -1, tile.row);
+            return state.getTile(tile.column - 1, tile.row);
         } else if (direction == Direction.UP) {
             return state.getTile(tile.column, tile.row - 1);
         } else {
