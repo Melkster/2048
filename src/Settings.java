@@ -10,10 +10,15 @@ public class Settings extends JLabel
     private int settingY;
     private int settingSize;
 
+    private int language;
+
     public Settings(String text, Point origin) {
         this.settingX = origin.x;
         this.settingY = origin.y;
         this.settingSize = 50;
+
+        //0 = Swedish, 1= English
+        this.language = 0;
     }
 
     public Boolean checkInsideSetting(int x, int y) {
@@ -24,6 +29,10 @@ public class Settings extends JLabel
         }
 
         return false;
+    }
+
+    public int getLanguage() {
+        return this.language;
     }
 
     public void paintComponent(Graphics g)
