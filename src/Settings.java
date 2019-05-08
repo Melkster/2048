@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -30,17 +32,15 @@ public class Settings extends JLabel
 
         int width = getWidth();
         int height = getHeight();
-        int recWid = width / 8;
-        int recHei = height / 8;
 
         Graphics2D g2d = (Graphics2D) g;
-
+        
         // Set the desired font if different from default font
         Font font = new Font("Serif", Font.PLAIN, 15);
         g2d.setFont(font);
 
         // Draw a string such that its base line is at x, y
-        g2d.drawString("Settings", width/6, height/2);
+        g2d.drawString("Settings", width/2-30, height/2-3);
         FontMetrics fontMetrics = g2d.getFontMetrics();
     }
 }

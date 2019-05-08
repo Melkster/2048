@@ -1,7 +1,9 @@
+package src;
+
 public class Void extends Tile {
 
-    public Void() {
-        super(0);
+    public Void(int column, int row) {
+        super(0, column, row);
     }
 
     public void draw() {}

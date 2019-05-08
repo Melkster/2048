@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.event.*;
 import java.awt.*;
 
+import src.*;
+
 public class Game extends JFrame implements ActionListener,
                                             MouseListener {
 	
@@ -69,21 +71,28 @@ public class Game extends JFrame implements ActionListener,
             System.out.println("Outside GameBoard and Setting");
         }
     }
+
+    public void move(Direction direction) {
+        // Should use Swipe in `direction`, and then `SpawnTile`
+        // gb.state should as a side effect be updated by the executed commands
+        commandManager.executeCommand(new Swipe(direction, gb.state));
+        commandManager.executeCommand(new SpawnTile(gb.state));
+    }
  
 
         public void keyPressed(KeyEvent arrow){
         switch (arrow.getKeyCode()){
             case KeyEvent.VK_UP:
-                commandManager.execute(new Swipe(Direction.UP));
+                commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
                 break;
             case KeyEvent.VK_DOWN: 
-                commandManager.execute(new Swipe(Direction.DOWN));
+                commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
                 break;
             case KeyEvent.VK_RIGHT: 
-                commandManager.execute(new Swipe(Direction.RIGHT));
+                commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
                 break;
             case KeyEvent.VK_LEFT: 
-                commandManager.execute(new Swipe(Direction.LEFT));
+                commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
                 break;
         }
     }
