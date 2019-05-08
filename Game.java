@@ -148,8 +148,28 @@ public class Game extends JFrame implements ActionListener,
         }*/
     }
 
+    public boolean checkForWin(){
+        if (gb.state.hasEmptyTile() == false){
+            commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
+            commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
+            commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
+            commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
+            if(gb.state.hasEmptyTile() == false){
+                return true;
+               //Skriv ut "Game Over!!!"
+
+            } else {
+                commandManager.undoCommand();
+                commandManager.undoCommand();
+                commandManager.undoCommand();
+                commandManager.undoCommand();
+            }
+        }
+    }
+
+
 	public static void main(String[] args){
-        Game frame= new Game();
+        Game frame = new Game();
         //Settings panel2 = new Settings();
 
         //frame.add(panel2);
