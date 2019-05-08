@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.border.*;
