@@ -45,4 +45,8 @@ public class CommandManager {
         command.execute();
         undoStack.push(command);
     }
+
+    public void clearRedos() {
+        redoStack.clear();
+    }
 }
