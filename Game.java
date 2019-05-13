@@ -6,16 +6,11 @@ import java.awt.*;
 
 import src.*;
 
-public class Game extends JFrame implements ActionListener,
-                                            MouseListener {
-
+public class Game extends JFrame implements ActionListener, MouseListener {
     static GraphicsConfiguration gc;
-
     private GameBoard gb = new GameBoard(null, null, 4);
     private Settings st;
-
     private TrialPane tp;
-
     private CommandManager commandManager;
 
     public Game() {
@@ -148,9 +143,26 @@ public class Game extends JFrame implements ActionListener,
         }*/
     }
 
+    public boolean checkForWin(){
+        if (!gb.state.hasEmptyTile()){
+            for (Direction d : Direction.values()) {
+                commandManager.executeCommand(new Swipe(d, gb.state));
+                if (gb.state.hasEmptyTile()) {
+                    commandManager.undoCommand();
+                    commandManager.clearRedos();
+                    return false ;
+                } else commandManager.undoCommand();
+            };
+            return true; //Skriv ut "Game Over!!!"
+        }
+    }
+
+
 	public static void main(String[] args){
         Game frame = new Game();
         //Settings panel2 = new Settings();
+
+        System.out.println(Direction.UP);
 
         //frame.add(panel2);
 	}
