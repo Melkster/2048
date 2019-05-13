@@ -143,8 +143,8 @@ public class Game extends JFrame implements ActionListener, MouseListener {
         }*/
     }
 
-    public boolean checkForWin(){
-        if (!gb.state.hasEmptyTile()){
+    public boolean checkForWin() {
+        if (!gb.state.hasEmptyTile()) {
             for (Direction d : Direction.values()) {
                 commandManager.executeCommand(new Swipe(d, gb.state));
                 if (gb.state.hasEmptyTile()) {
@@ -154,16 +154,14 @@ public class Game extends JFrame implements ActionListener, MouseListener {
                 } else commandManager.undoCommand();
             };
             return true; //Skriv ut "Game Over!!!"
-        }
+        } else return false;
     }
 
 
-	public static void main(String[] args){
+    public static void main(String[] args) {
         Game frame = new Game();
         //Settings panel2 = new Settings();
 
-        System.out.println(Direction.UP);
-
         //frame.add(panel2);
-	}
+    }
 }

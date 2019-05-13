@@ -50,8 +50,8 @@ public class Swipe implements Command  {
     }
 
     /**
-     * Merges `tile` into its neighbour in `this.direction` if they are equal.
-     * Otherwise do nothing.
+     * Merges `tile` into its neighbour in `this.direction` if they are equal,
+     * given a `state`.  Otherwise do nothing.
      */
     private void collide(Tile tile, State state) {
         Tile neighbour = neighbourTile(tile, state);
@@ -63,7 +63,8 @@ public class Swipe implements Command  {
     }
 
     /**
-     * Moves `tile` as far as possible in `this.direction` given a `state`.
+     * Moves `tile` as far as possible in `this.direction` given a `state`. If
+     * `tile` collides with a tile with the same value they will be merged.
      */
     private void push(Tile tile, State state) {
         if (tile instanceof Void) return;
@@ -89,7 +90,7 @@ public class Swipe implements Command  {
      * `tile` is next to an edge and has no neighbour in `direction`, return
      * `null`.
      */
-    private Tile neighbourTile(Tile tile, Direction direction, State state) {
+    private Tile neighbourTile(Tile tile, State state) {
         if (direction == Direction.RIGHT) {
             return state.getTile(tile.column + 1, tile.row);
         } else if (direction == Direction.LEFT) {

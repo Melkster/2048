@@ -123,15 +123,13 @@ public class State implements Cloneable {
     }
 
     public boolean hasEmptyTile() {
-        for (int i = 0; i < state.size; i++) {
-            for (int k = 0; k < state.size; k++) {
-                tile = state.getTile(k, i);
-                if (tile instanceof Void) {
+        for (int i = 0; i < size; i++) {
+            for (int k = 0; k < size; k++) {
+                if (getTile(k, i) instanceof Void) {
                     return true;
                 }
             }
-
-            return false;
         }
+        return false;
     }
 }
