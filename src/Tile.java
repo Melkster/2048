@@ -2,7 +2,7 @@ package src;
 
 import java.awt.*;
 
-public class Tile implements CustGraphics {
+public class Tile implements CustGraphics, Cloneable {
     public int value;
     public int column;
     public int row;
@@ -37,7 +37,18 @@ public class Tile implements CustGraphics {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o instanceof Tile) return this.value == ((Tile) o).value;
+        else return false;
+    }
+
+    @Override
     public String toString() {
         return "<" + value + ">";
+    }
+
+    @Override
+    public Tile clone() throws CloneNotSupportedException {
+        return (Tile) super.clone();
     }
 }

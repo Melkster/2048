@@ -1,6 +1,8 @@
 package src;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -9,51 +11,77 @@ public class Swipe implements Command  {
     private Direction direction;
     private State previousState;
     private State newState;
+    private ArrayList<Tile> collided = new ArrayList<Tile>();
 
     public Swipe(Direction direction, State state) {
         this.direction = direction;
-        this.previousState = state;
+        this.newState = state;
+        try {
+            this.previousState = newState.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void execute() {
-        // TODO
-        // PLAY SOUND SWAP SOUND EVERY SECOND
+        int size = previousState.size;
+        for (int column = 0; column < size; column++) {
+            for (int row = 0; row < size; row++) {
+                if (direction == Direction.LEFT || direction == Direction.UP) {
+                    push(newState.getTile(column, row), newState);
+                } else if (direction == Direction.RIGHT || direction == Direction.DOWN) {
+                    push(newState.getTile(size - column - 1, size - row - 1), newState);
+                }
+            }
+        }
+        collided.clear();
+        // TODO: play sound swap sound every second
     }
 
     @Override
     public void undo() {
-        // TODO
+        newState = previousState; // TODO: this doesn't work
     }
 
     @Override
     public void redo() {
-        // TODO
+        execute();
     }
 
     /**
-     * Merges `tile1` and `tile2` based on a `direction`.
+     * Merges `tile` into its neighbour in `this.direction` if they are equal.
+     * Otherwise do nothing.
      */
-    private void collide(Tile tile1, Tile tile2, Direction direction) {}
+    private void collide(Tile tile, State state) {
+        Tile neighbour = neighbourTile(tile, state);
+        if (tile.equals(neighbour) && collidable(neighbour)) {
+            state.removeTile(tile);
+            neighbour.increment();
+            collided.add(neighbour);
+        }
+    }
 
     /**
-     * Moves `tile` as far as possible in a `direction` given a `state`.
+     * Moves `tile` as far as possible in `this.direction` given a `state`.
      */
-    private void push(Tile tile, Direction direction, State state) {
+    private void push(Tile tile, State state) {
+        if (tile instanceof Void) return;
         Tile neighbour;
         do {
-            neighbour = neighbourTile(tile, direction, state);
+            neighbour = neighbourTile(tile, state);
             if (neighbour == null) return; // Stop if we reach an edge of the game board
             if (neighbour instanceof Void) state.moveTile(tile, neighbour.column, neighbour.row);
         } while (neighbour instanceof Void);
+        collide(tile, state);
     }
 
     /**
-     * Returns the Tile next to `tile` in a `direction`, given `state`. If
+     * Returns the Tile next to `tile` in `this.direction`, given `state`. If
      * `tile` is next to an edge and has no neighbour in `direction`, return
      * `null`.
      */
-    private Tile neighbourTile(Tile tile, Direction direction, State state) {
+    private Tile neighbourTile(Tile tile, State state) {
         if (direction == Direction.RIGHT) {
             return state.getTile(tile.column + 1, tile.row);
         } else if (direction == Direction.LEFT) {
@@ -63,6 +91,14 @@ public class Swipe implements Command  {
         } else {
             return state.getTile(tile.column, tile.row + 1);
         }
+    }
+
+    /**
+     * Returns `true` if `tile` has already been collided with a tile during
+     * this Swipe, otherwise `false`.
+     */
+    private boolean collidable(Tile tile) {
+        return collided.indexOf(tile) == -1; // Checks if tile exist in `collided`
     }
 
     private void playSound(String soundFile) {
