@@ -7,7 +7,7 @@ public class Tile implements CustGraphics {
     public int column;
     public int row;
 
-    public Tile(int value, int column, int row) {
+    public Tile(int column, int row, int value) {
         this.value = value;
         this.column = column;
         this.row = row;
@@ -36,4 +36,8 @@ public class Tile implements CustGraphics {
         value /= 2;
     }
 
+    @Override
+    public String toString() {
+        return "<" + value + ">";
+    }
 }

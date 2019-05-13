@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class TrialPane extends JPanel {
-    
+
     private JLayeredPane layeredPane;
     private GameBoard gb;
     private Settings st;
@@ -25,7 +25,7 @@ public class TrialPane extends JPanel {
         Point origin1 = new Point(15, 15);
         Point origin2 = new Point(currWidth/2-150, 100);
 
-        this.gb = new GameBoard("GameBoard", origin2);
+        this.gb = new GameBoard("GameBoard", origin2, 4);
         this.st = new Settings("Settings", origin1);
 
         this.gb.setVerticalAlignment(JLabel.TOP);
