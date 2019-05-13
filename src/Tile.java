@@ -1,28 +1,40 @@
 package src;
 
 import java.awt.*;
+import javax.swing.*;
 
-public class Tile implements CustGraphics {
+public class Tile extends JLabel implements Cloneable {
     public int value;
     public int column;
     public int row;
 
-    public Tile(int value, int column, int row) {
+    public Tile(int column, int row, int value) {
         this.value = value;
         this.column = column;
         this.row = row;
     }
 
-    public void draw(int x, int y, int width, int height, Graphics graphics) {
+    /*public void draw(int x, int y, int height, int width, Graphics graphics) {
         // TODO: x and y should be calculated by Tile based on `column` and
         // `row `, instead of passed as arguments
-        graphics.drawRect(x, y, width, height);
+        graphics.drawRect(x + 5, y + 5, width - 10, height - 10);
+        Graphics2D g2 = (Graphics2D) graphics;
+        g2.setColor(Color.BLACK);
+        g2.fillRect(x + 7, y + 7, width - 10, height - 10);
 
         String text = Integer.toString(this.value);
         FontMetrics metrics = graphics.getFontMetrics();
-        int valueX = x + (width - metrics.stringWidth(text)) / 2;
-        int valueY = y + (height - metrics.getHeight()) / 2 + metrics.getAscent();
+        int valueX = x + (width - 10 - metrics.stringWidth(text)) / 2;
+        int valueY = y + (height  - 10 - metrics.getHeight()) / 2 + metrics.getAscent();
         graphics.drawString(text, valueX, valueY);
+    }*/
+
+    public int getTileX(int width) {
+        return (this.column*width) + (this.column*10);
+    }
+    
+    public int getTileY(int width) {
+        return (this.row*width) + (this.row*10);
     }
 
     public void increment() {
@@ -33,44 +45,50 @@ public class Tile implements CustGraphics {
         value /= 2;
     }
 
-    public Color tileColor(Graphics g){
-
-        if (value == 2) {
-            return new Color(0xeee4da);
-        }
-        if (value == 4) {
-            return new Color(0xede0c8);
-        }
-        if (value == 8) {
-            return new Color(0xf2b179);
-        }
-        if (value == 16) {
-            return new Color(0xf59563);
-        }
-        if (value == 32) {
-            return new Color(0xf67c5f);
-        }
-        if (value == 64) {
-            return new Color(0xf65e3b);
-        }
-        if (value == 128) {
-            return new Color(0xedcf72);
-        }
-        if (value == 256) {
-            return new Color(0xedcc61);
-        }
-        if (value == 512) {
-            return new Color(0xedc850);
-        }
-        if (value == 1024) {
-            return new Color(0xedc53f);
-        }
-        if (value == 2048) {
-            return new Color(0xedc22e);
-        }
-        return Color.GRAY;
-
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Tile) return this.value == ((Tile) o).value;
+        else return false;
     }
 
+    @Override
+    public String toString() {
+        return "<" + value + ">";
+    }
 
+    @Override
+    public Tile clone() throws CloneNotSupportedException {
+        return (Tile) super.clone();
+    }
+
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+
+        int height = getHeight();
+        int width = getWidth();
+
+        // TODO: x and y should be calculated by Tile based on `column` and
+        // `row `, instead of passed as arguments
+        Graphics2D g2d = (Graphics2D) g;
+
+        int fontSize = 17;
+
+        Font font = new Font("Serif", Font.PLAIN, fontSize);
+        FontMetrics metrics = g2d.getFontMetrics();
+        g2d.setFont(font);
+
+        String text = Integer.toString(this.value);
+        int valueX = (width - metrics.stringWidth(text)) / 2;
+        int valueY = (width - metrics.getHeight()) / 2 + metrics.getAscent();
+
+        // Draw a string such that its base line is at x, y
+        g2d.drawString(text, valueX, valueY);
+
+        /*
+        FontMetrics metrics = g.getFontMetrics();
+        
+        int valueY = y + (width - 10 - metrics.getHeight()) / 2 + metrics.getAscent();
+        g.drawString(text, valueX, valueY);*/
+    }
 }

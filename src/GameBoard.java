@@ -7,16 +7,19 @@ public class GameBoard extends JLabel
 {
     private int startX = 0;
     private int startY = 0;
+    private int recSize = 0;
     private int size = 0;
     public State state;
 
-    public GameBoard(String text, Point origin) {
+    public GameBoard(String text, Point origin, int boardSize) {
+        this.state = new State(boardSize);
         int width = getWidth();
         int height = getHeight();
         int recHei = height / 8;
 
         startX = ((width/2)-((recHei*4+50)/2));
         startY = ((height/2)-((recHei*4+50)/2));
+        recSize = recHei;
         size = ((recHei*4)+50);
     }
 
@@ -30,6 +33,10 @@ public class GameBoard extends JLabel
 
     public int getStartY() {
         return this.startY;
+    }
+
+    public int getRecSize() {
+        return this.recSize;
     }
 
     public Boolean checkInsideGB(int x, int y) {
@@ -63,7 +70,7 @@ public class GameBoard extends JLabel
 
         this.startX = ((width/2)-((recHei*4+50)/2));
         this.startY = ((height/2)-((recHei*4+50)/2));
-
+        this.recSize = recHei;
         this.size = ((recHei*4)+50);
 
         g.drawRect(startX, startY, this.size, this.size);
