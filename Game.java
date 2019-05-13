@@ -6,16 +6,11 @@ import java.awt.*;
 
 import src.*;
 
-public class Game extends JFrame implements ActionListener,
-                                            MouseListener {
-
+public class Game extends JFrame implements ActionListener, MouseListener {
     static GraphicsConfiguration gc;
-
-    private GameBoard gb;
+    private GameBoard gb = new GameBoard(null, null, 4);
     private Settings st;
-
     private TrialPane tp;
-
     private CommandManager commandManager;
 
     public Game() {

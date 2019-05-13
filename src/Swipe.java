@@ -37,24 +37,45 @@ public class Swipe implements Command  {
     private void collide(Tile tile1, Tile tile2, Direction direction) {}
 
     /**
-     * Returns the Tile next to `tile` given a `direction` and a `state`.
-     */
-    private Tile neighbourTile(Tile tile, Direction direction, State state) {
-        // TODO
-    }
-
-    /**
      * Moves `tile` as far as possible in a `direction` given a `state`.
      */
     private void push(Tile tile, Direction direction, State state) {
-        // TODO
+        Tile neighbour;
+        do {
+            neighbour = neighbourTile(tile, direction, state);
+            if (neighbour == null) return; // Stop if we reach an edge of the game board
+            if (neighbour instanceof Void) state.moveTile(tile, neighbour.column, neighbour.row);
+        } while (neighbour instanceof Void);
+    }
+
+    /**
+     * Returns the Tile next to `tile` in a `direction`, given `state`. If
+     * `tile` is next to an edge and has no neighbour in `direction`, return
+     * `null`.
+     */
+    private Tile neighbourTile(Tile tile, Direction direction, State state) {
+        if (direction == Direction.RIGHT) {
+            return state.getTile(tile.column + 1, tile.row);
+        } else if (direction == Direction.LEFT) {
+            return state.getTile(tile.column - 1, tile.row);
+        } else if (direction == Direction.UP) {
+            return state.getTile(tile.column, tile.row - 1);
+        } else {
+            return state.getTile(tile.column, tile.row + 1);
+        }
     }
 
     private void playSound(String soundFile) {
         File f = new File("./" + soundFile);
-        AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());  
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioIn);
-        clip.start();
+        Clip clip;
+        AudioInputStream audioIn;
+        try {
+            audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
+            clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
