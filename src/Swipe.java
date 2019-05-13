@@ -77,11 +77,19 @@ public class Swipe implements Command  {
     }
 
     /**
-     * Returns the Tile next to `tile` in `this.direction`, given `state`. If
+     * Returns `true` if `tile` has already been collided with a tile during
+     * this Swipe, otherwise `false`.
+     */
+    private boolean collidable(Tile tile) {
+        return collided.indexOf(tile) == -1; // Checks if tile exist in `collided`
+    }
+
+    /**
+     * Returns the Tile next to `tile` in a `direction`, given `state`. If
      * `tile` is next to an edge and has no neighbour in `direction`, return
      * `null`.
      */
-    private Tile neighbourTile(Tile tile, State state) {
+    private Tile neighbourTile(Tile tile, Direction direction, State state) {
         if (direction == Direction.RIGHT) {
             return state.getTile(tile.column + 1, tile.row);
         } else if (direction == Direction.LEFT) {
@@ -91,14 +99,6 @@ public class Swipe implements Command  {
         } else {
             return state.getTile(tile.column, tile.row + 1);
         }
-    }
-
-    /**
-     * Returns `true` if `tile` has already been collided with a tile during
-     * this Swipe, otherwise `false`.
-     */
-    private boolean collidable(Tile tile) {
-        return collided.indexOf(tile) == -1; // Checks if tile exist in `collided`
     }
 
     private void playSound(String soundFile) {
