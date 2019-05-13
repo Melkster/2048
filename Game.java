@@ -106,6 +106,7 @@ public class Game extends JFrame implements ActionListener, MouseListener, KeyLi
                 break;
         }
     }
+
     public void keyReleased(KeyEvent e) {
     }
 
@@ -160,7 +161,6 @@ public class Game extends JFrame implements ActionListener, MouseListener, KeyLi
             return true; //Skriv ut "Game Over!!!"
         } else return false;
     }
-
 
     public static void main(String[] args) {
         Game frame = new Game();
