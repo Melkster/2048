@@ -33,7 +33,7 @@ public class Settings extends JLabel
 
     public void setLanguage(int newLang) {
         this.language = newLang;
-    }s
+    }
 
     public int getLanguage() {
         return this.language;

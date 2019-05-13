@@ -81,6 +81,7 @@ public class Game extends JFrame implements ActionListener, MouseListener, KeyLi
         commandManager.executeCommand(new Swipe(direction, gb.state));
         commandManager.executeCommand(new SpawnTile(gb.state));
     }
+
     public void keyTyped(KeyEvent e) {
     }
     public void keyPressed(KeyEvent arrow){
@@ -105,7 +106,7 @@ public class Game extends JFrame implements ActionListener, MouseListener, KeyLi
                 break;
         }
     }
-  
+
     public void keyReleased(KeyEvent e) {
     }
 

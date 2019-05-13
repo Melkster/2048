@@ -84,7 +84,8 @@ public class Tile extends JLabel implements Cloneable {
 
         // Draw a string such that its base line is at x, y
         g2d.drawString(text, valueX, valueY);
-
+      
+        setBackground(TileColor.tileColor(this.value));
         /*
         FontMetrics metrics = g.getFontMetrics();
         
