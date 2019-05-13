@@ -6,16 +6,15 @@ import java.awt.*;
 
 import src.*;
 
-public class Game extends JFrame implements ActionListener, MouseListener {
+public class Game extends JFrame implements ActionListener, MouseListener, KeyListener {
     static GraphicsConfiguration gc;
-    private GameBoard gb = new GameBoard(null, null, 4);
+    private GameBoard gb;
     private Settings st;
-    private TrialPane tp;
+    private LayoutHandler lh;
     private CommandManager commandManager;
 
     public Game() {
         setTitle("2048");
-
 
         /*JLayeredPane basePlatform = new JLayeredPane();
         basePlatform.setPreferredSize(new Dimension(500, 500));
@@ -40,11 +39,20 @@ public class Game extends JFrame implements ActionListener, MouseListener {
         int height = getHeight();
         int recHei = height / 8;
 
-        tp = new TrialPane(width);
-        tp.setOpaque(true);
-        this.setContentPane(tp);
+        Point origin1 = new Point(15, 15);
+        Point origin2 = new Point(width/2-150, 100);
 
-        commandManager = new CommandManager();
+        this.gb = new GameBoard("GameBoard", origin2, 4);
+        this.st = new Settings("Settings", origin1);
+
+        this.lh = new LayoutHandler(this.gb, this.st, width);
+        this.lh.setOpaque(true);
+        this.setContentPane(this.lh);
+
+        this.commandManager = new CommandManager();
+
+        addMouseListener(this);
+        addKeyListener(this);
 
         this.pack();
         this.setVisible(true);
@@ -74,22 +82,31 @@ public class Game extends JFrame implements ActionListener, MouseListener {
         commandManager.executeCommand(new SpawnTile(gb.state));
     }
 
-
-        public void keyPressed(KeyEvent arrow){
+    public void keyTyped(KeyEvent e) {
+    }
+    public void keyPressed(KeyEvent arrow){
         switch (arrow.getKeyCode()){
             case KeyEvent.VK_UP:
+                System.out.println("UP");
                 commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
                 break;
             case KeyEvent.VK_DOWN:
+                System.out.println("DOWN");
                 commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
                 break;
             case KeyEvent.VK_RIGHT:
+                System.out.println("RIGHT");
                 commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
+                this.lh.animateTile();
                 break;
             case KeyEvent.VK_LEFT:
+                System.out.println("LEFT");
                 commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
+                this.lh.animateTile();
                 break;
         }
+    }
+    public void keyReleased(KeyEvent e) {
     }
 
     //Checks if undo is available in CommandManager.
@@ -128,19 +145,6 @@ public class Game extends JFrame implements ActionListener, MouseListener {
     //Handle user interaction with the check box and combo box.
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-
-        /*if (ON_TOP_COMMAND.equals(cmd)) {
-            if (onTop.isSelected())
-                layeredPane.moveToFront(dukeLabel);
-            else
-                layeredPane.moveToBack(dukeLabel);
-
-        } else if (LAYER_COMMAND.equals(cmd)) {
-            int position = onTop.isSelected() ? 0 : 1;
-            layeredPane.setLayer(dukeLabel,
-                                 position,
-                                 layerList.getSelectedIndex());
-        }*/
     }
 
     public boolean checkForWin() {
@@ -160,8 +164,5 @@ public class Game extends JFrame implements ActionListener, MouseListener {
 
     public static void main(String[] args) {
         Game frame = new Game();
-        //Settings panel2 = new Settings();
-
-        //frame.add(panel2);
     }
 }

@@ -1,8 +1,9 @@
 package src;
 
 import java.awt.*;
+import javax.swing.*;
 
-public class Tile implements CustGraphics, Cloneable {
+public class Tile extends JLabel implements Cloneable {
     public int value;
     public int column;
     public int row;
@@ -13,7 +14,7 @@ public class Tile implements CustGraphics, Cloneable {
         this.row = row;
     }
 
-    public void draw(int x, int y, int height, int width, Graphics graphics) {
+    /*public void draw(int x, int y, int height, int width, Graphics graphics) {
         // TODO: x and y should be calculated by Tile based on `column` and
         // `row `, instead of passed as arguments
         graphics.drawRect(x + 5, y + 5, width - 10, height - 10);
@@ -26,6 +27,14 @@ public class Tile implements CustGraphics, Cloneable {
         int valueX = x + (width - 10 - metrics.stringWidth(text)) / 2;
         int valueY = y + (height  - 10 - metrics.getHeight()) / 2 + metrics.getAscent();
         graphics.drawString(text, valueX, valueY);
+    }*/
+
+    public int getTileX(int width) {
+        return (this.column*width) + (this.column*10);
+    }
+    
+    public int getTileY(int width) {
+        return (this.row*width) + (this.row*10);
     }
 
     public void increment() {
@@ -50,5 +59,36 @@ public class Tile implements CustGraphics, Cloneable {
     @Override
     public Tile clone() throws CloneNotSupportedException {
         return (Tile) super.clone();
+    }
+
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+
+        int height = getHeight();
+        int width = getWidth();
+
+        // TODO: x and y should be calculated by Tile based on `column` and
+        // `row `, instead of passed as arguments
+        Graphics2D g2d = (Graphics2D) g;
+
+        int fontSize = 17;
+
+        Font font = new Font("Serif", Font.PLAIN, fontSize);
+        FontMetrics metrics = g2d.getFontMetrics();
+        g2d.setFont(font);
+
+        String text = Integer.toString(this.value);
+        int valueX = (width - metrics.stringWidth(text)) / 2;
+        int valueY = (width - metrics.getHeight()) / 2 + metrics.getAscent();
+
+        // Draw a string such that its base line is at x, y
+        g2d.drawString(text, valueX, valueY);
+
+        /*
+        FontMetrics metrics = g.getFontMetrics();
+        
+        int valueY = y + (width - 10 - metrics.getHeight()) / 2 + metrics.getAscent();
+        g.drawString(text, valueX, valueY);*/
     }
 }
