@@ -3,12 +3,19 @@ package src;
 import java.util.*;
 import java.io.*;
 
+/*
+*   Class to Lookup text from the available Languages
+*   which are read from the languages.txt
+*/
 public class Lookup {
 
     private ArrayList<Language> languages;
 
+    /*
+    *   Base Constructor
+    */
     public Lookup() {
-        List<String> completeFile = readFile("./languages.txt");
+        List<String> completeFile = readFile("./src/languages.txt");
         this.languages = new ArrayList<Language>();
 
         int lenCompFile = completeFile.size();
@@ -20,16 +27,20 @@ public class Lookup {
                 this.languages.add(temp);
             }
         }
-
-        for (int k=0; k<this.languages.size(); k++) {
-            this.languages.get(k).printAll();
-            System.out.println();
-        }
-
-        System.out.println(this.languages.get(0).lookupIndexWord("info1"));
-        System.out.println(this.languages.get(1).lookupIndexWord("info1"));
     }
 
+    /*
+    *   Function to lookup specific keyword from the
+    *   lang specified.
+    */
+    public String lookupLang(int lang, String keyword) {
+        return this.languages.get(lang).lookupIndexWord(keyword);
+    }
+
+    /*
+    *   Function to read a whole file with the languages.txt
+    *   layout and create languages from it.
+    */
     private List<String> readFile(String filename)
     {
         List<String> fullFile = new ArrayList<String>();
@@ -42,7 +53,6 @@ public class Lookup {
                 String[] splited = line.split("\" \"");
                 
                 for(int i=0; i<splited.length; i++) {
-                    //System.out.println(splited[i]);
                     fullFile.add(splited[i]);
                 }
             }
@@ -55,9 +65,5 @@ public class Lookup {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public static void main(String[]args) {
-        Lookup lu = new Lookup();
     }
 }

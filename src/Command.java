@@ -1,8 +1,10 @@
 package src;
 
 import java.lang.*;
-// Any number of import statements
 
+/*
+*   Interface class to describe what can be done with a Command
+*/
 public interface Command {
     public void execute();
     public void undo();

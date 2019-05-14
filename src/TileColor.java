@@ -2,7 +2,14 @@ package src;
 
 import java.awt.Color;
 
+/*
+*   Class to handle fetching of TileColors based
+*   on their specific values.
+*/
 public class TileColor {
+    /*
+    *   Static function which handles the Color fetching.
+    */
     public static Color tileColor(int value){
 
         if (value == 2) {return new Color(0xeee4da);}

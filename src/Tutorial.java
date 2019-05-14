@@ -1,13 +1,42 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Graphics;
 
-public class Tutorial {
+/*
+*   Class to handle a Tutorial Game introduction
+*   The Class allows the player to get a understanding of the
+*   Game and how it is played.
+*/
+public class Tutorial extends JLabel {
+    
     private boolean swiped = false;
+    private Settings set;
 
-    public Tutorial() {
+    /*
+    *   Base Constructor
+    */
+    public Tutorial(Settings settings) {
+        this.set = settings;
     }
 
+    /*
+    *   Function to check if the x and y values are inside
+    *   the constraints of the component.
+    */
+    /*public Boolean checkInsideTutorial(int x, int y) {
+        if ((x > this.tutX) && (x < this.tutX+this.tutSize)) {
+            if ((y > this.tutY+30) && (y < this.tutY+this.tutSize+30)) {
+                return true;
+            }
+        }
+        return false;
+    }*/
+
+    /*
+    *   Function to illustrate how a user can conduct and upward or
+    *   downwards swipe within the Game.
+    */
     /*public void swipeUporDown() {
         int x = 50;
         int y = 50;
@@ -34,6 +63,11 @@ public class Tutorial {
         }
     }
 
+    /*
+    *   Function to illustrate how a user can conduct and left or
+    *   right swipe within the Game.
+    */
+    /*
     public void swipeLeftorRight(Graphics g) {
 
         int x = 50;
@@ -62,21 +96,37 @@ public class Tutorial {
             }
         }
 
-    }
+    }*/
 
+    /*
+    *   Function to show the undo function works within the Game.
+    */
+    /*
     public void undoRedoTut() {
     }*/
 
-    /*public static void main(String[]args) {
-        JFrame testFrame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    /*
+    *   Function to draw the Component and its containing components
+    */
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-        Tutorial test = new Tutorial();
+        int width = getWidth()/2;
+        int height = getHeight()/2;
 
-        frame.getContentPane().add(test);
-        frame.setSize(500,500);
-        frame.setVisibility(true);
+        Graphics2D g2d = (Graphics2D) g;
+        
+        // Set the desired font if different from default font
+        Font font = new Font("Serif", Font.PLAIN, 15);
+        g2d.setFont(font);
 
-        test.swipeUporDown(frame.graphics);
-    }*/
+        String txt = this.set.getLookup().lookupLang(this.set.getLanguage(), "tut");
+
+        FontMetrics metrics = g2d.getFontMetrics();
+        int valueX = (width - metrics.stringWidth(txt)/2);
+        int valueY = (height + metrics.getAscent()/4);
+
+        // Draw a string such that its base line is at x, y
+        g2d.drawString(txt, valueX, valueY);
+    }
 }

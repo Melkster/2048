@@ -1,14 +1,23 @@
 package src;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
+/*
+*   Class to describe a Language which is created
+*   from a List<Strings> which are sent into the
+*   Constructor. The Language constructor follows the
+*   structure of the language.txt file which is read
+*   in the Lookup.java file.
+*/
 public class Language {
 
     private String language;
     private ArrayList<String> indexWordList;
     private ArrayList<String> translationList;
 
+    /*
+    *   Base Constructor
+    */
     public Language(List<String> compFile, int index) {
         int maxLen = compFile.size();
         
@@ -32,6 +41,11 @@ public class Language {
         }
     }
 
+    /*
+    *   Function to look up a specific word and find its corresponding
+    *   index in the actual language file. The Index words remain
+    *   the same for all languages.
+    */
     public String lookupIndexWord(String check) {
         int len = indexWordList.size();
         for (int i=0; i<len; i++) {
@@ -43,6 +57,9 @@ public class Language {
         return "";
     }
 
+    /*
+    *   Function to print the whole language.
+    */
     public void printAll() {
         int len = translationList.size();
 
