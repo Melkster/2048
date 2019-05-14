@@ -2,10 +2,17 @@ package src;
 
 import java.util.*;
 
+/*
+*   Class which handles the information of how the current
+*   State looks and what it contains.
+*/
 public class State implements Cloneable, Iterable<Tile> {
     private ArrayList<ArrayList<Tile>> layout;
     public int size; // Dimensionality of the game board
 
+    /*
+    *   Base Constructor
+    */
     public State(int size) {
         this.size = size;
         layout = new ArrayList<ArrayList<Tile>>(size);
@@ -94,6 +101,10 @@ public class State implements Cloneable, Iterable<Tile> {
         return removeTile(tile.column, tile.row) && addTile(newColumn, newRow, tile);
     }
 
+    /*
+    *   Override function which determines what is printed out
+    *   for the Object.
+    */
     @Override
     public String toString() {
         String output = "";
@@ -106,6 +117,10 @@ public class State implements Cloneable, Iterable<Tile> {
         return output;
     }
 
+    /*
+    *   Override function which handles the Cloning behaviour
+    *   for the object.
+    */
     @Override
     public State clone() throws CloneNotSupportedException {
         ArrayList<ArrayList<Tile>> layoutClone = new ArrayList<ArrayList<Tile>>(size);
@@ -121,10 +136,17 @@ public class State implements Cloneable, Iterable<Tile> {
         return stateClone;
     }
 
+    /*
+    *   Function to check if the State has any empty slots.
+    */
     public boolean hasEmptyTile() {
         return getEmptyTiles().size() > 0;
     }
 
+    /*
+    *   Function to fetch an ArrayList of all the Empty
+    *   Tiles in the State.
+    */
     public ArrayList<Tile> getEmptyTiles() {
         ArrayList<Tile> voids = new ArrayList<Tile>();
         for (Tile tile : this) {
@@ -135,24 +157,40 @@ public class State implements Cloneable, Iterable<Tile> {
         return voids;
     }
 
+    /*
+    *   Override function which Creates an Iterator for the State.
+    */
     @Override
     public Iterator<Tile> iterator() {
         return new StateIterator(this);
     }
 
-    class StateIterator implements Iterator {
+    /*
+    *   Inner Class that is an Iterator for the Object.
+    */
+    class StateIterator implements Iterator<Tile> {
         Tile current;
         State state;
 
+        /*
+        *   Base Constructor
+        */
         public StateIterator(State state) {
             this.state = state;
             current = state.getTile(0, 0);
         }
 
+        /*
+        *   Function to check is the Iterator has something
+        *   next in itself.
+        */
         public boolean hasNext() {
             return current != null;
         }
 
+        /*
+        *   Function to return the next Tile in the Iterator.
+        */
         public Tile next() {
             Tile tile = current;
             if (current.column < size - 1) {

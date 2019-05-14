@@ -3,16 +3,22 @@ package src;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 
+/*
+*   Class that constructs a Swiping action.
+*   These actions are put into the stack.
+*/
 public class Swipe implements Command  {
+    
     private Direction direction;
     private State previousState;
     private State newState;
     private ArrayList<Tile> collided = new ArrayList<Tile>();
 
+    /*
+    *   Base Constructor
+    */
     public Swipe(Direction direction, State state) {
         this.direction = direction;
         this.newState = state;
@@ -23,6 +29,10 @@ public class Swipe implements Command  {
         }
     }
 
+    /*
+    *   Override function which creates a behaviour for the execute
+    *   action for the Swipe action.
+    */
     @Override
     public void execute() {
         int size = previousState.size;
@@ -39,11 +49,19 @@ public class Swipe implements Command  {
         // TODO: play sound swap sound every second
     }
 
+    /*
+    *   Override function which creates a behaviour for the undo
+    *   action for the Swipe action.
+    */
     @Override
     public void undo() {
         newState = previousState; // TODO: this doesn't work
     }
 
+    /*
+    *   Override function which creates a behaviour for the redo
+    *   action for the Swipe action.
+    */
     @Override
     public void redo() {
         execute();
@@ -102,6 +120,9 @@ public class Swipe implements Command  {
         }
     }
 
+    /*
+    *   Function to play a sound when a Swipe action is executed
+    */
     private void playSound(String soundFile) {
         File f = new File("./" + soundFile);
         Clip clip;

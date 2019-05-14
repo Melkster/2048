@@ -4,6 +4,10 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.util.Stack;
 
+/*
+*   Class CommandManager which handles all Commands
+*   that are executed in the program.
+*/
 public class CommandManager {
 
     private Stack<Command> undoStack = new Stack<Command>();

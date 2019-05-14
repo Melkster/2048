@@ -3,25 +3,29 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 
+/*
+*   Class Settings which handles interaction with dictionary
+*   and other Settings which might be needed
+*/
 public class Settings extends JLabel
 {
-
-    private int settingX;
-    private int settingY;
-    private int settingSize;
-
     private int language;
+    private Lookup lookup;
 
-    public Settings(String text, Point origin) {
-        this.settingX = origin.x;
-        this.settingY = origin.y;
-        this.settingSize = 50;
-
+    /*
+    *   Base Constructor
+    */
+    public Settings() {
         //0 = Swedish, 1= English
-        this.language = 0;
+        this.language = 1;
+        this.lookup = new Lookup();
     }
 
-    public Boolean checkInsideSetting(int x, int y) {
+    /*
+    *   Function to check if the x and y values are within
+    *   the constraints of the Settings size
+    */
+    /*public Boolean checkInsideSetting(int x, int y) {
         if ((x > this.settingX) && (x < this.settingX+this.settingSize)) {
             if ((y > this.settingY+30) && (y < this.settingY+this.settingSize+30)) {
                 return true;
@@ -29,22 +33,37 @@ public class Settings extends JLabel
         }
 
         return false;
-    }
+    }*/
 
+    /*
+    *   Standard setter function
+    */
     public void setLanguage(int newLang) {
         this.language = newLang;
     }
 
+    /*
+    *   Standard getter function
+    */
     public int getLanguage() {
         return this.language;
     }
 
-    public void paintComponent(Graphics g)
-    {
+    /*
+    *   Standard getter function
+    */
+    public Lookup getLookup() {
+        return this.lookup;
+    }
+
+    /*
+    *   Function to draw the Component and its content
+    */
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int width = getWidth();
-        int height = getHeight();
+        int width = getWidth()/2;
+        int height = getHeight()/2;
 
         Graphics2D g2d = (Graphics2D) g;
         
@@ -52,8 +71,13 @@ public class Settings extends JLabel
         Font font = new Font("Serif", Font.PLAIN, 15);
         g2d.setFont(font);
 
+        String txt = this.lookup.lookupLang(this.language, "set");
+
+        FontMetrics metrics = g2d.getFontMetrics();
+        int valueX = (width - metrics.stringWidth(txt)/2);
+        int valueY = (height + metrics.getAscent()/4);
+
         // Draw a string such that its base line is at x, y
-        g2d.drawString("Settings", width/2-30, height/2-3);
-        FontMetrics fontMetrics = g2d.getFontMetrics();
+        g2d.drawString(txt, valueX, valueY);
     }
 }
