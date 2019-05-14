@@ -2,7 +2,7 @@ package src;
 
 import java.util.*;
 
-public class State implements Cloneable {
+public class State implements Cloneable, Iterable<Tile> {
     private ArrayList<ArrayList<Tile>> layout;
     public int size; // Dimensionality of the game board
 
@@ -76,7 +76,6 @@ public class State implements Cloneable {
         }
     }
 
-
     /**
      * Overloaded version of removeTile.
      *
@@ -123,14 +122,46 @@ public class State implements Cloneable {
     }
 
     public boolean hasEmptyTile() {
-        for (int i = 0; i < size; i++) {
-            for (int k = 0; k < size; k++) {
-                if (getTile(k, i) instanceof Void) {
-                    return true;
-                }
+        return getEmptyTiles().size() > 0;
+    }
+
+    public ArrayList<Tile> getEmptyTiles() {
+        ArrayList<Tile> voids = new ArrayList<Tile>();
+        for (Tile tile : this) {
+            if (tile instanceof Void) {
+                voids.add(tile);
             }
         }
-        return false;
+        return voids;
+    }
+
+    @Override
+    public Iterator<Tile> iterator() {
+        return new StateIterator(this);
+    }
+
+    class StateIterator implements Iterator {
+        Tile current;
+        State state;
+
+        public StateIterator(State state) {
+            this.state = state;
+            current = state.getTile(0, 0);
+        }
+
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        public Tile next() {
+            Tile tile = current;
+            if (current.column < size - 1) {
+                current = state.getTile(current.column + 1, current.row);
+            } else {
+                current = state.getTile(0, current.row + 1);
+            }
+            return tile;
+        }
     }
 
 
