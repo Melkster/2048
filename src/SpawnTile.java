@@ -28,6 +28,14 @@ public class SpawnTile implements Command {
         this.value = randomValue();
     }
 
+    public int getColumn() {
+        return this.column;
+    }
+
+    public int getRow() {
+        return this.row;
+    }
+
     /*
     *   Override function which handles the behaviour of
     *   the execute action

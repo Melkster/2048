@@ -47,24 +47,17 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         int height = getHeight();
         int newStSize = height/10;
 
-        Tile testTile = new Tile(0,0,2);
-
         standardSet(this.gb);
         standardSet(this.st);
         standardSet(this.tut);
-        standardSet(testTile);
         
         this.gb.setBounds(this.currGBX, this.currGBY, GBSize, GBSize);
         this.st.setBounds(origin1.x, origin1.y, GBSize/2, newStSize);
         this.tut.setBounds(origin2.x, origin2.y, GBSize/2, newStSize);
 
-        testTile.setBounds(this.currGBX, this.currGBY, this.gb.getRecSize()-10, this.gb.getRecSize()-10);
-
-        layeredPane.add(this.gb, 4);
-        layeredPane.add(this.st, 4);
-        layeredPane.add(this.tut, 4);
-        
-        layeredPane.add(testTile, 0);
+        this.layeredPane.add(this.gb, 4);
+        this.layeredPane.add(this.st, 4);
+        this.layeredPane.add(this.tut, 4);
 
         addComponentListener(this);
 
@@ -113,6 +106,20 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         animateTile();
     }
 
+    public void addTileToLayout(Tile tile) {
+        standardSet(tile);
+        
+        int recSize = this.gb.getRecSize();
+        int tileX = this.currGBX + this.gb.getStartX() + tile.getTileX(recSize) + 15;
+        int tileY = this.currGBY + this.gb.getStartY() + tile.getTileY(recSize) + 15;
+        
+        tile.setBounds(tileX, tileY, recSize-10, recSize-10);
+        
+        this.layeredPane.add(this.tut, 0);
+
+        this.repaint();
+    }
+
     /*
     *   Function to handle component resizing of Tiles either
     *   when the window changes size or when Tiles are moved.
@@ -120,10 +127,10 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     public void animateTile() {
         Component[] tmp = this.layeredPane.getComponentsInLayer(0);
 
-        int newSize = this.gb.getRecSize();
+        /*int newSize = this.gb.getRecSize();
         int newTx = this.currGBX + this.gb.getStartX() + ((Tile) tmp[0]).getTileX(newSize) + 15;
         int newTy = this.currGBY + this.gb.getStartY() + ((Tile) tmp[0]).getTileY(newSize) + 15;
-        ((Tile) tmp[0]).setBounds(newTx, newTy, newSize-10, newSize-10);
+        ((Tile) tmp[0]).setBounds(newTx, newTy, newSize-10, newSize-10);*/
     }
 
     /*

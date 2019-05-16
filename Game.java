@@ -95,8 +95,13 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public void move(Direction direction) {
         // Should use Swipe in `direction`, and then `SpawnTile`
         // gb.state should as a side effect be updated by the executed commands
-        commandManager.executeCommand(new Swipe(direction, gb.state));
-        commandManager.executeCommand(new SpawnTile(gb.state));
+        System.out.println(this.gb.state);
+        commandManager.executeCommand(new Swipe(direction, this.gb.state));
+        SpawnTile temp = new SpawnTile(this.gb.state);
+        commandManager.executeCommand(temp);
+        Tile tempAdd = this.gb.state.getTile(temp.getColumn(), temp.getRow());
+        this.lh.addTileToLayout(tempAdd);
+        System.out.println(this.gb.state);
     }
 
     /*
@@ -118,25 +123,28 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         switch (arrow.getKeyCode()){
             case KeyEvent.VK_UP:
                 System.out.println("UP");
-                // TODO: Replace with move
-                commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
+                move(Direction.UP);
+                //commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
                 break;
             case KeyEvent.VK_DOWN:
                 System.out.println("DOWN");
                 // TODO: Replace with move
-                commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
+                move(Direction.DOWN);
+                //commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
                 break;
             case KeyEvent.VK_RIGHT:
                 System.out.println("RIGHT");
                 // TODO: Replace with move
-                commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
-                this.lh.animateTile();
+                move(Direction.RIGHT);
+                //commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
+                //this.lh.animateTile();
                 break;
             case KeyEvent.VK_LEFT:
                 System.out.println("LEFT");
                 // TODO: Replace with move
-                commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
-                this.lh.animateTile();
+                move(Direction.LEFT);
+                //commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
+                //this.lh.animateTile();
                 break;
         }
     }
