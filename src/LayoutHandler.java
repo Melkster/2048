@@ -7,6 +7,8 @@ import javax.accessibility.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.util.*;
+
 /*
 *   Class to handle the general layout structure in the window.
 *   The LayoutHandler manages on which levels different Components
@@ -117,6 +119,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         
         this.layeredPane.add(tile, 0);
 
+        this.revalidate();
         this.repaint();
     }
 
@@ -129,13 +132,32 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         for(Component curr : tmp) {
             if (curr instanceof Tile) {
+                this.layeredPane.remove(curr);
+            }
+        }
+
+        this.revalidate();
+        this.repaint();
+
+        ArrayList<Tile> newList = new ArrayList<Tile>();
+
+        for(int i=0; i<4; i++) {
+            for(int k=0; k<4; k++) {
+                newList.add(this.gb.state.getTile(k, i));
+            }
+        }
+
+        for(Tile curr : newList) {
+            if ((curr instanceof Tile) && (!(curr instanceof Void))) {
                 int newSize = this.gb.getRecSize();
                 int newTx = this.currGBX + this.gb.getStartX() + ((Tile) curr).getTileX(newSize) + 15;
                 int newTy = this.currGBY + this.gb.getStartY() + ((Tile) curr).getTileY(newSize) + 15;
                 ((Tile) curr).setBounds(newTx, newTy, newSize-10, newSize-10);
+                this.layeredPane.add(curr, 0);
             }
         }
 
+        this.revalidate();
         this.repaint();
     }
 
