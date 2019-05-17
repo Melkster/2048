@@ -88,6 +88,13 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         }
     }
 
+    public void initiateGame() {
+        this.commandManager.executeCommand(new SpawnTile(this.gb.state));
+        this.commandManager.executeCommand(new SpawnTile(this.gb.state));
+        
+        this.lh.animateTile();
+    }
+
     /*
     *   Function move which handles the operations when a
     *   button in a direction has been pressed
@@ -149,6 +156,20 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                 this.lh.animateTile();
                 //commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
                 //this.lh.animateTile();
+                break;
+            case KeyEvent.VK_R:
+                System.out.println("REDO");
+                System.out.println(this.gb.state);
+                commandManager.redoCommand();
+                this.lh.animateTile();
+                System.out.println(this.gb.state);
+                break;
+            case KeyEvent.VK_U:
+                System.out.println("UNDO");
+                System.out.println(this.gb.state);
+                commandManager.undoCommand();
+                this.lh.animateTile();
+                System.out.println(this.gb.state);
                 break;
         }
     }
@@ -238,5 +259,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     */
     public static void main(String[] args) {
         Game frame = new Game();
+
+        frame.initiateGame();
     }
 }
