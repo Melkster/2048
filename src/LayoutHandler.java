@@ -115,7 +115,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         
         tile.setBounds(tileX, tileY, recSize-10, recSize-10);
         
-        this.layeredPane.add(this.tut, 0);
+        this.layeredPane.add(tile, 0);
 
         this.repaint();
     }
@@ -127,10 +127,16 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     public void animateTile() {
         Component[] tmp = this.layeredPane.getComponentsInLayer(0);
 
-        /*int newSize = this.gb.getRecSize();
-        int newTx = this.currGBX + this.gb.getStartX() + ((Tile) tmp[0]).getTileX(newSize) + 15;
-        int newTy = this.currGBY + this.gb.getStartY() + ((Tile) tmp[0]).getTileY(newSize) + 15;
-        ((Tile) tmp[0]).setBounds(newTx, newTy, newSize-10, newSize-10);*/
+        for(Component curr : tmp) {
+            if (curr instanceof Tile) {
+                int newSize = this.gb.getRecSize();
+                int newTx = this.currGBX + this.gb.getStartX() + ((Tile) curr).getTileX(newSize) + 15;
+                int newTy = this.currGBY + this.gb.getStartY() + ((Tile) curr).getTileY(newSize) + 15;
+                ((Tile) curr).setBounds(newTx, newTy, newSize-10, newSize-10);
+            }
+        }
+
+        this.repaint();
     }
 
     /*
