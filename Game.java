@@ -89,8 +89,12 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     }
 
     public void initiateGame() {
-        this.commandManager.executeCommand(new SpawnTile(this.gb.state));
-        this.commandManager.executeCommand(new SpawnTile(this.gb.state));
+        this.gb.resetState();
+
+        this.commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+        this.commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+
+        this.commandManager.clearUndos();
 
         this.lh.animateTile();
     }
@@ -104,7 +108,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         // gb.state should as a side effect be updated by the executed commands
         System.out.println(this.gb.state);
         commandManager.executeCommand(new Swipe(direction, this.gb.state));
-        commandManager.executeCommand(new SpawnTile(this.gb.state));
+        commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
         System.out.println(this.gb.state);
     }
 
@@ -168,6 +172,9 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                 this.lh.animateTile();
                 System.out.println(this.gb.state);
                 break;
+            case KeyEvent.VK_N:
+                System.out.println("NEW GAME");
+                initiateGame();
         }
     }
 
@@ -256,7 +263,5 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     */
     public static void main(String[] args) {
         Game frame = new Game();
-
-        frame.initiateGame();
     }
 }

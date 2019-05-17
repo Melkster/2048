@@ -30,6 +30,10 @@ public class GameBoard extends JLabel
         this.size = ((recHei*4)+50);
     }
 
+    public void resetState() {
+        this.state = new State(this.state.size);
+    }
+
     /*
     *   Standard getter function for private variable
     */
