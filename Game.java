@@ -124,18 +124,21 @@ public class Game extends JFrame implements MouseListener, KeyListener {
             case KeyEvent.VK_UP:
                 System.out.println("UP");
                 move(Direction.UP);
+                this.lh.animateTile();
                 //commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
                 break;
             case KeyEvent.VK_DOWN:
                 System.out.println("DOWN");
                 // TODO: Replace with move
                 move(Direction.DOWN);
+                this.lh.animateTile();
                 //commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
                 break;
             case KeyEvent.VK_RIGHT:
                 System.out.println("RIGHT");
                 // TODO: Replace with move
                 move(Direction.RIGHT);
+                this.lh.animateTile();
                 //commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
                 //this.lh.animateTile();
                 break;
@@ -143,6 +146,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                 System.out.println("LEFT");
                 // TODO: Replace with move
                 move(Direction.LEFT);
+                this.lh.animateTile();
                 //commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
                 //this.lh.animateTile();
                 break;
