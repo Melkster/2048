@@ -67,8 +67,8 @@ public class GameBoard extends JLabel
     *   are inside the borders of the GameBoard
     */
     public Boolean checkInsideGB(int x, int y) {
-        if ((x > this.startX) && (x < this.startX+this.size)) {
-            if ((y > this.startY+30) && (y < this.startY+this.size+30)) {
+        if ((x > this.getX()) && (x < this.getX()+this.getWidth())) {
+            if ((y > this.getY()) && (y < this.getY()+this.getHeight())) {
                 return true;
             }
         }

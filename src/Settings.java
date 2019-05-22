@@ -9,6 +9,8 @@ import java.awt.*;
 */
 public class Settings extends JLabel
 {
+    private boolean activeMenu;
+
     private int language;
     private Lookup lookup;
 
@@ -16,6 +18,8 @@ public class Settings extends JLabel
     *   Base Constructor
     */
     public Settings() {
+        this.activeMenu = false;
+
         //0 = Swedish, 1= English
         this.language = 1;
         this.lookup = new Lookup();
@@ -25,21 +29,29 @@ public class Settings extends JLabel
     *   Function to check if the x and y values are within
     *   the constraints of the Settings size
     */
-    /*public Boolean checkInsideSetting(int x, int y) {
-        if ((x > this.settingX) && (x < this.settingX+this.settingSize)) {
-            if ((y > this.settingY+30) && (y < this.settingY+this.settingSize+30)) {
+    public Boolean checkInsideSetting(int x, int y) {
+        if ((x > this.getX()) && (x < this.getX()+this.getWidth())) {
+            if ((y > this.getY()) && (y < this.getY()+this.getHeight())) {
+                this.activeMenu = true;
                 return true;
             }
         }
-
         return false;
-    }*/
+    }
 
     /*
     *   Standard setter function
     */
     public void setLanguage(int newLang) {
         this.language = newLang;
+    }
+
+    public void setActiveMenu(boolean newBool) {
+        this.activeMenu = newBool;
+    }
+
+    public boolean getActiveMenu() {
+        return this.activeMenu;
     }
 
     /*
