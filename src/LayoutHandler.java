@@ -22,6 +22,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     private GameBoard gb;
     private Settings st;
     private Tutorial tut;
+    private SettingsScreen sts;
 
     private int currGBX;
     private int currGBY;
@@ -29,7 +30,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     /*
     *   Base Constructor which receives the Components from the Game Class
     */
-    public LayoutHandler(GameBoard theGB, Settings theST, Tutorial theTut, int currWidth) {
+    public LayoutHandler(GameBoard theGB, Settings theST, SettingsScreen theSTS, Tutorial theTut, int currWidth) {
         
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         layeredPane = new JLayeredPane();
@@ -37,6 +38,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.gb = theGB;
         this.st = theST;
+        this.sts = theSTS;
         this.tut = theTut;
 
         this.currGBX    = currWidth/2-150;
@@ -52,18 +54,25 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         standardSet(this.gb);
         standardSet(this.st);
         standardSet(this.tut);
+
+        this.sts.setOpaque(false);
+        this.sts.setBorder(BorderFactory.createLineBorder(Color.black));
         
         this.gb.setBounds(this.currGBX, this.currGBY, GBSize, GBSize);
         this.st.setBounds(origin1.x, origin1.y, GBSize/2, newStSize);
+        this.sts.setBounds(this.currGBX, this.currGBY, GBSize, GBSize + newStSize);
         this.tut.setBounds(origin2.x, origin2.y, GBSize/2, newStSize);
+
+        this.sts.setVisible(false);
 
         this.layeredPane.add(this.gb, 4);
         this.layeredPane.add(this.st, 4);
         this.layeredPane.add(this.tut, 4);
 
+        this.layeredPane.add(this.sts,0);
+
         addComponentListener(this);
 
-        add(Box.createRigidArea(new Dimension(0, 10)));
         add(layeredPane);
     }
 
@@ -103,6 +112,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.gb.setBounds(this.currGBX, this.currGBY, newGBSize, newGBSize);
         this.st.setBounds(this.currGBX, this.currGBY+newGBSize, newGBSize/2, newSTSize);
+        this.sts.setBounds(this.currGBX, this.currGBY, newGBSize, newGBSize + newSTSize);
         this.tut.setBounds(this.currGBX+newGBSize/2, this.currGBY+newGBSize, newGBSize/2, newSTSize);
 
         animateTile();
@@ -158,6 +168,19 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         }
 
         this.revalidate();
+        this.repaint();
+    }
+
+    /*
+    *   Function to create an Interactie JLabel to work as setting interface
+    */
+    public void setActiveMenu() {
+        this.sts.setVisible(true);
+        this.repaint();
+    }
+
+    public void disableActiveMenu() {
+        this.sts.setVisible(false);
         this.repaint();
     }
 

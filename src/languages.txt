@@ -1,6 +1,9 @@
 Lang
 language" "Swedish
 set" "Inställningar
+setLang" "Språk
+setSound" "Ljudinställningar
+setRestart" "Omstart
 tut" "Handledning
 info1" "svep i en riktning för att flytta brickorna
 info2" "När två brickor med samma siffra krockar slås dem ihop
@@ -9,6 +12,9 @@ info3" "Målet med spelet är att slå ihop brickor tills du når siffran 2048
 Lang
 language" "English
 set" "Settings
+setLang" "language
+setSound" "Sound Settings
+setRestart" "Restart
 tut" "Tutorial
 info1" "Swipe in a direction to move the tiles
 info2" "When two tiles with the same number collide they merge together

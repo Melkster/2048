@@ -22,6 +22,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     */
     private GameBoard gb;
     private Settings st;
+    private SettingsScreen sts;
     private Tutorial tut;
     private LayoutHandler lh;
     private CommandManager commandManager;
@@ -47,9 +48,10 @@ public class Game extends JFrame implements MouseListener, KeyListener {
 
         this.gb = new GameBoard(4);
         this.st = new Settings();
+        this.sts = new SettingsScreen(this.st);
         this.tut = new Tutorial(this.st);
 
-        this.lh = new LayoutHandler(this.gb, this.st, this.tut, width);
+        this.lh = new LayoutHandler(this.gb, this.st, this.sts, this.tut, width);
         this.lh.setOpaque(true);
         this.setContentPane(this.lh);
 
@@ -73,18 +75,42 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         int x = e.getX();
         int y = e.getY();
 
+        y = y - this.getInsets().top;
+
         System.out.println("Mouse Clicked at X: " + x + " - Y: " + y);
-        if(this.gb.checkInsideGB(x,y)) {
-            System.out.println("Inside GameBoard");
+        if (!this.st.getActiveMenu()) {
+            if(this.gb.checkInsideGB(x,y)) {
+                System.out.println("Inside GameBoard");
+            }
+            else if (this.st.checkInsideSetting(x,y)) {
+                this.lh.setActiveMenu();
+                System.out.println("Inside Setting");
+            }
+            /*else if (this.tut.checkInsideTutorial(x,y)) {
+                System.out.println("Inside Tutorial");
+            }*/
+            else {
+                System.out.println("Outside GameBoard and Setting");
+            }
         }
-        /*else if (this.st.checkInsideSetting(x,y)) {
-            System.out.println("Inside Setting");
-        }*/
-        /*else if (this.tut.checkInsideTutorial(x,y)) {
-            System.out.println("Inside Tutorial");
-        }*/
         else {
-            System.out.println("Outside GameBoard and Setting");
+            int checkVal = this.sts.checkInsideSTS(x,y);
+            switch (checkVal) {
+                case 0:
+                    System.out.println("Inside Language Menu");
+                    break;
+                case 1:
+                    System.out.println("Inside Sound Menu");
+                    break;
+                case 2:
+                    System.out.println("Inside Restart");
+                    break;
+                default:
+                    this.lh.disableActiveMenu();
+                    this.st.setActiveMenu(false);
+                    System.out.println("Not inside STS");
+                    break;
+            }
         }
     }
 
