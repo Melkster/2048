@@ -10,7 +10,7 @@ import javax.sound.sampled.*;
 *   These actions are put into the stack.
 */
 public class Swipe implements Command  {
-    
+
     private Direction direction;
     private State previousState;
     private State newState;
@@ -65,6 +65,10 @@ public class Swipe implements Command  {
     @Override
     public void redo() {
         execute();
+    }
+
+    public boolean stateChanged() {
+        return !newState.equals(previousState);
     }
 
     /**

@@ -118,26 +118,20 @@ public class State implements Cloneable, Iterable<Tile> {
     }
 
     @Override
-    public boolean equals(Object o) { 
-        
-        State tmp = (State) o;
+    public boolean equals(Object o) {
+        if (!(o instanceof State)) return false;
 
+        State state = (State) o;
         Iterator<Tile> theIter = this.iterator();
-        Iterator<Tile> checkIter = tmp.iterator();
-
-        boolean check = true;
+        Iterator<Tile> checkIter = state.iterator();
 
         while(theIter.hasNext()) {
             Tile thisTile = theIter.next();
             Tile checkTile = checkIter.next();
 
-            if (thisTile.value != checkTile.value) {
-                check = false;
-                break;
-            }
+            if (thisTile.value != checkTile.value) return false;
         }
-
-        return check;
+        return true;
     }
 
     /*
