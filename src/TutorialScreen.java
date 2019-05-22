@@ -22,8 +22,12 @@ public class TutorialScreen extends JLabel {
 
         this.WHSize = new Point(width/2, startY-height/10);
     }
+    
+    /* Check if you are inside TUT area
+    //TODO
+    */
 
-    public int checkInsideSTS(int x, int y) {
+    public int checkInsideTUT(int x, int y) {
         int width = this.getWidth();
         int height = this.getHeight();
 
