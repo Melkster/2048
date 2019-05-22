@@ -31,7 +31,6 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     *   Base Constructor which receives the Components from the Game Class
     */
     public LayoutHandler(GameBoard theGB, Settings theST, SettingsScreen theSTS, Tutorial theTut, int currWidth) {
-        
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(500, 500));
@@ -57,7 +56,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.sts.setOpaque(false);
         this.sts.setBorder(BorderFactory.createLineBorder(Color.black));
-        
+
         this.gb.setBounds(this.currGBX, this.currGBY, GBSize, GBSize);
         this.st.setBounds(origin1.x, origin1.y, GBSize/2, newStSize);
         this.sts.setBounds(this.currGBX, this.currGBY, GBSize, GBSize + newStSize);
@@ -106,7 +105,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
             newGBSize = ((width/4)*3);
             newSTSize = width/10;
         }
-        
+
         this.currGBX = width/2-(newGBSize/2);
         this.currGBY = height/2-(newGBSize/2);
 
@@ -120,13 +119,13 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
     public void addTileToLayout(Tile tile) {
         standardSet(tile);
-        
+
         int recSize = this.gb.getRecSize();
         int tileX = this.currGBX + this.gb.getStartX() + tile.getTileX(recSize) + 15;
         int tileY = this.currGBY + this.gb.getStartY() + tile.getTileY(recSize) + 15;
-        
+
         tile.setBounds(tileX, tileY, recSize-10, recSize-10);
-        
+
         this.layeredPane.add(tile, 0);
 
         this.revalidate();

@@ -101,6 +101,14 @@ public class State implements Cloneable, Iterable<Tile> {
         return removeTile(tile.column, tile.row) && addTile(newColumn, newRow, tile);
     }
 
+    public void set(State state) {
+        try {
+            layout = state.clone().layout;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*
     *   Override function which determines what is printed out
     *   for the Object.
