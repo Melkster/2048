@@ -11,7 +11,7 @@ import src.*;
 *   main method.
 */
 public class Game extends JFrame implements MouseListener, KeyListener {
-    
+
     /*
     *   Private variables related to a Game object
     *   The game object manages the creation of the base
@@ -25,7 +25,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     private Tutorial tut;
     private LayoutHandler lh;
     private CommandManager commandManager;
-    
+
     /*
     *   Base constructor
     */
@@ -108,7 +108,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         // gb.state should as a side effect be updated by the executed commands
         System.out.println(this.gb.state);
         commandManager.executeCommand(new Swipe(direction, this.gb.state));
-        //commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+        commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
         System.out.println(this.gb.state);
     }
 
