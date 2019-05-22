@@ -107,9 +107,10 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         // Should use Swipe in `direction`, and then `SpawnTile`
         // gb.state should as a side effect be updated by the executed commands
         System.out.println(this.gb.state);
-        commandManager.executeCommand(new Swipe(direction, this.gb.state));
-        commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
-
+        Swipe swipe = new Swipe(direction, this.gb.state);
+        commandManager.executeCommand(swipe);
+        if (swipe.stateChanged()) commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+        else commandManager.undoCommand();
         System.out.println(this.gb.state);
     }
 
