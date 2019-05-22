@@ -109,6 +109,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         System.out.println(this.gb.state);
         commandManager.executeCommand(new Swipe(direction, this.gb.state));
         commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+
         System.out.println(this.gb.state);
     }
 
