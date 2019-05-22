@@ -55,7 +55,7 @@ public class Swipe implements Command  {
     */
     @Override
     public void undo() {
-        newState = previousState; // TODO: this doesn't work
+        newState.set(previousState);
     }
 
     /*
