@@ -46,7 +46,7 @@ public class Swipe implements Command  {
             }
         }
         collided.clear();
-        // TODO: play sound swap sound every second
+        playSound("src/sounds/swipe-sound2.wav");
     }
 
     /*
