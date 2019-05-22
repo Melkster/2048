@@ -88,6 +88,17 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         }
     }
 
+    public void initiateGame() {
+        this.gb.resetState();
+
+        this.commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+        this.commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+
+        this.commandManager.clearUndos();
+
+        this.lh.animateTile();
+    }
+
     /*
     *   Function move which handles the operations when a
     *   button in a direction has been pressed
@@ -97,10 +108,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         // gb.state should as a side effect be updated by the executed commands
         System.out.println(this.gb.state);
         commandManager.executeCommand(new Swipe(direction, this.gb.state));
-        SpawnTile temp = new SpawnTile(this.gb.state);
-        commandManager.executeCommand(temp);
-        Tile tempAdd = this.gb.state.getTile(temp.getColumn(), temp.getRow());
-        this.lh.addTileToLayout(tempAdd);
+        //commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
         System.out.println(this.gb.state);
     }
 
@@ -150,6 +158,28 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                 //commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
                 //this.lh.animateTile();
                 break;
+            case KeyEvent.VK_R:
+                System.out.println("REDO");
+                if(commandManager.isRedoAvailable()) {
+                    System.out.println(this.gb.state);
+                    commandManager.redoCommand();
+                    this.lh.animateTile();
+                    System.out.println(this.gb.state);
+                }
+                break;
+            case KeyEvent.VK_U:
+                System.out.println("UNDO");
+                if (commandManager.isUndoAvailable()) {
+                    System.out.println(this.gb.state);
+                    commandManager.undoCommand();
+                    commandManager.undoCommand();
+                    this.lh.animateTile();
+                    System.out.println(this.gb.state);
+                }
+                break;
+            case KeyEvent.VK_N:
+                System.out.println("NEW GAME");
+                initiateGame();
         }
     }
 

@@ -65,4 +65,8 @@ public class CommandManager {
     public void clearRedos() {
         redoStack.clear();
     }
+
+    public void clearUndos() {
+        undoStack.clear();
+    }
 }

@@ -7,17 +7,19 @@ import java.util.*;
  * (chosen randomly). Pre condition: Assumes that there is an empty position in `state`.
  */
 public class SpawnTile implements Command {
-    
+
     private int column;
     private int row;
     private int value;
     private State state;
-    
+    private LayoutHandler lh;
+
     /*
     *   Base Constructor
     */
-    public SpawnTile(State state) {
+    public SpawnTile(State state, LayoutHandler lh) {
         this.state = state;
+        this.lh = lh;
 
         ArrayList<Tile> voids = state.getEmptyTiles();
         Random rand = new Random();
@@ -42,7 +44,9 @@ public class SpawnTile implements Command {
     */
     @Override
     public void execute() {
-        state.addTile(column, row, value);
+        Tile tile = new Tile(column, row, value);
+        state.addTile(column, row, tile);
+        lh.addTileToLayout(tile);
     }
 
     /*
