@@ -16,12 +16,16 @@ public class Swipe implements Command  {
     private State newState;
     private ArrayList<Tile> collided = new ArrayList<Tile>();
 
+    private Settings st;
+
     /*
     *   Base Constructor
     */
-    public Swipe(Direction direction, State state) {
+    public Swipe(Direction direction, State state, Settings theST) {
         this.direction = direction;
         this.newState = state;
+        this.st = theST;
+
         try {
             this.previousState = newState.clone();
         } catch (CloneNotSupportedException e) {
@@ -46,7 +50,9 @@ public class Swipe implements Command  {
             }
         }
         collided.clear();
-        playSound("src/sounds/swipe-sound2.wav");
+        if (this.st.getSound()) {
+            playSound("src/sounds/swipe-sound2.wav");
+        }
     }
 
     /*
@@ -68,7 +74,7 @@ public class Swipe implements Command  {
     }
 
     public boolean stateChanged() {
-        return !newState.equals(previousState);
+        return !(newState.equals(previousState));
     }
 
     /**

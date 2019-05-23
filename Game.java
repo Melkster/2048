@@ -98,12 +98,26 @@ public class Game extends JFrame implements MouseListener, KeyListener {
             switch (checkVal) {
                 case 0:
                     System.out.println("Inside Language Menu");
+                    if (this.st.getLanguage() == 0) {
+                        this.st.setLanguage(1);
+                    }
+                    else {
+                        this.st.setLanguage(0);
+                    }
+                    this.revalidate();
+                    this.repaint();
                     break;
                 case 1:
                     System.out.println("Inside Sound Menu");
+                    this.st.changeSound();
+                    this.revalidate();
+                    this.repaint();
                     break;
                 case 2:
                     System.out.println("Inside Restart");
+                    this.initiateGame();
+                    this.revalidate();
+                    this.repaint();
                     break;
                 default:
                     this.lh.disableActiveMenu();
@@ -132,7 +146,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public void move(Direction direction) {
         // Should use Swipe in `direction`, and then `SpawnTile`
         // gb.state should as a side effect be updated by the executed commands
-        Swipe swipe = new Swipe(direction, this.gb.state);
+        Swipe swipe = new Swipe(direction, this.gb.state, this.st);
         commandManager.executeCommand(swipe);
         if (swipe.stateChanged()) {
             commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
@@ -157,59 +171,52 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     */
     @Override
     public void keyPressed(KeyEvent arrow){
-        switch (arrow.getKeyCode()){
-            case KeyEvent.VK_UP:
-                System.out.println("UP");
-                move(Direction.UP);
-                this.lh.animateTile();
-                //commandManager.executeCommand(new Swipe(Direction.UP, gb.state));
-                break;
-            case KeyEvent.VK_DOWN:
-                System.out.println("DOWN");
-                // TODO: Replace with move
-                move(Direction.DOWN);
-                this.lh.animateTile();
-                //commandManager.executeCommand(new Swipe(Direction.DOWN, gb.state));
-                break;
-            case KeyEvent.VK_RIGHT:
-                System.out.println("RIGHT");
-                // TODO: Replace with move
-                move(Direction.RIGHT);
-                this.lh.animateTile();
-                //commandManager.executeCommand(new Swipe(Direction.RIGHT, gb.state));
-                //this.lh.animateTile();
-                break;
-            case KeyEvent.VK_LEFT:
-                System.out.println("LEFT");
-                // TODO: Replace with move
-                move(Direction.LEFT);
-                this.lh.animateTile();
-                //commandManager.executeCommand(new Swipe(Direction.LEFT, gb.state));
-                //this.lh.animateTile();
-                break;
-            case KeyEvent.VK_R:
-                System.out.println("REDO");
-                if(commandManager.isRedoAvailable()) {
-                    commandManager.redoCommand();
-                    commandManager.redoCommand();
+        if (!(this.st.getActiveMenu())) {
+            switch (arrow.getKeyCode()){
+                case KeyEvent.VK_UP:
+                    System.out.println("UP");
+                    move(Direction.UP);
                     this.lh.animateTile();
-                    System.out.println(this.gb.state);
-                }
-                break;
-            case KeyEvent.VK_U:
-                System.out.println("UNDO");
-                if (commandManager.isUndoAvailable()) {
-                    commandManager.undoCommand();
-                    commandManager.undoCommand();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    System.out.println("DOWN");
+                    move(Direction.DOWN);
                     this.lh.animateTile();
-                    this.lh.animateTile(); // Without running this twice, sometimes not all tiles are drawn on undo
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    System.out.println("RIGHT");
+                    move(Direction.RIGHT);
+                    this.lh.animateTile();
+                    break;
+                case KeyEvent.VK_LEFT:
+                    System.out.println("LEFT");
+                    move(Direction.LEFT);
+                    this.lh.animateTile();
+                    break;
+                case KeyEvent.VK_R:
+                    System.out.println("REDO");
+                    if(commandManager.isRedoAvailable()) {
+                        commandManager.redoCommand();
+                        commandManager.redoCommand();
+                        this.lh.animateTile();
+                        System.out.println(this.gb.state);
+                    }
+                    break;
+                case KeyEvent.VK_U:
+                    System.out.println("UNDO");
+                    if (commandManager.isUndoAvailable()) {
+                        commandManager.undoCommand();
+                        commandManager.undoCommand();
+                        this.lh.animateTile();
+                        this.lh.animateTile(); // Without running this twice, sometimes not all tiles are drawn on undo
+                        System.out.println(this.gb.state);
+                    }
+                    break;
+                case KeyEvent.VK_N:
+                    System.out.println("NEW GAME");
+                    initiateGame();
                     System.out.println(this.gb.state);
-                }
-                break;
-            case KeyEvent.VK_N:
-                System.out.println("NEW GAME");
-                initiateGame();
-                System.out.println(this.gb.state);
+            }
         }
     }
 
@@ -282,7 +289,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public boolean checkForWin() {
         if (!gb.state.hasEmptyTile()) {
             for (Direction d : Direction.values()) {
-                commandManager.executeCommand(new Swipe(d, gb.state));
+                commandManager.executeCommand(new Swipe(d, gb.state, this.st));
                 if (gb.state.hasEmptyTile()) {
                     commandManager.undoCommand();
                     commandManager.clearRedos();

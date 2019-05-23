@@ -27,6 +27,10 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     private int currGBX;
     private int currGBY;
 
+    private static int TOP_LAYER = 0;
+    private static int TILE_LAYER = 1;
+    private static int BACKGROUND_LAYER = 2;
+
     /*
     *   Base Constructor which receives the Components from the Game Class
     */
@@ -63,11 +67,11 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.sts.setVisible(false);
 
-        this.layeredPane.add(this.gb, 4);
-        this.layeredPane.add(this.st, 4);
-        this.layeredPane.add(this.tut, 4);
+        this.layeredPane.add(this.gb, BACKGROUND_LAYER);
+        this.layeredPane.add(this.st, BACKGROUND_LAYER);
+        this.layeredPane.add(this.tut, BACKGROUND_LAYER);
 
-        this.layeredPane.add(this.sts,0);
+        this.layeredPane.add(this.sts,TOP_LAYER);
 
         addComponentListener(this);
 
@@ -125,7 +129,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         tile.setBounds(tileX, tileY, recSize-10, recSize-10);
 
-        this.layeredPane.add(tile, 0);
+        this.layeredPane.add(tile, TILE_LAYER);
 
         this.revalidate();
         this.repaint();
@@ -161,7 +165,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
                 int newTx = this.currGBX + this.gb.getStartX() + ((Tile) curr).getTileX(newSize) + 15;
                 int newTy = this.currGBY + this.gb.getStartY() + ((Tile) curr).getTileY(newSize) + 15;
                 ((Tile) curr).setBounds(newTx, newTy, newSize-10, newSize-10);
-                this.layeredPane.add(curr, 0);
+                this.layeredPane.add(curr, TILE_LAYER);
             }
         }
 

@@ -37,6 +37,14 @@ public class Lookup {
         return this.languages.get(lang).lookupIndexWord(keyword);
     }
 
+    public void printoutLookup() {
+        int length = languages.size();
+
+        for (int i=0; i < length; i++) {
+            languages.get(i).printAll();
+        }
+    }
+
     /*
     *   Function to read a whole file with the languages.txt
     *   layout and create languages from it.
