@@ -101,6 +101,14 @@ public class State implements Cloneable, Iterable<Tile> {
         return removeTile(tile.column, tile.row) && addTile(newColumn, newRow, tile);
     }
 
+    public void set(State state) {
+        try {
+            layout = state.clone().layout;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*
     *   Override function which determines what is printed out
     *   for the Object.
@@ -118,26 +126,20 @@ public class State implements Cloneable, Iterable<Tile> {
     }
 
     @Override
-    public boolean equals(Object o) { 
-        
-        State tmp = (State) o;
+    public boolean equals(Object o) {
+        if (!(o instanceof State)) return false;
 
+        State state = (State) o;
         Iterator<Tile> theIter = this.iterator();
-        Iterator<Tile> checkIter = tmp.iterator();
-
-        boolean check = true;
+        Iterator<Tile> checkIter = state.iterator();
 
         while(theIter.hasNext()) {
             Tile thisTile = theIter.next();
             Tile checkTile = checkIter.next();
 
-            if (thisTile.value != checkTile.value) {
-                check = false;
-                break;
-            }
+            if (thisTile.value != checkTile.value) return false;
         }
-
-        return check;
+        return true;
     }
 
     /*

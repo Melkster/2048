@@ -38,7 +38,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
 
         this.setBackground(Color.WHITE);
 
-        this.setLocation(((width/2)- 400),100);
+        this.setLocation(150, 150);
         this.setMinimumSize(new Dimension(500, 500));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -132,19 +132,21 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public void move(Direction direction) {
         // Should use Swipe in `direction`, and then `SpawnTile`
         // gb.state should as a side effect be updated by the executed commands
-        System.out.println(this.gb.state);
-        commandManager.executeCommand(new Swipe(direction, this.gb.state));
-        commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
-
-        System.out.println(this.gb.state);
+        Swipe swipe = new Swipe(direction, this.gb.state);
+        commandManager.executeCommand(swipe);
+        if (swipe.stateChanged()) {
+            commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+            System.out.println(this.gb.state);
+        }
+        else commandManager.undoCommand();
+        lh.animateTile();
     }
 
     /*
     *   Override function necessary for KeyListener implement
     */
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
     /*
     *   Override function for Key pressed handler
@@ -188,7 +190,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
             case KeyEvent.VK_R:
                 System.out.println("REDO");
                 if(commandManager.isRedoAvailable()) {
-                    System.out.println(this.gb.state);
+                    commandManager.redoCommand();
                     commandManager.redoCommand();
                     this.lh.animateTile();
                     System.out.println(this.gb.state);
@@ -197,16 +199,17 @@ public class Game extends JFrame implements MouseListener, KeyListener {
             case KeyEvent.VK_U:
                 System.out.println("UNDO");
                 if (commandManager.isUndoAvailable()) {
-                    System.out.println(this.gb.state);
                     commandManager.undoCommand();
                     commandManager.undoCommand();
                     this.lh.animateTile();
+                    this.lh.animateTile(); // Without running this twice, sometimes not all tiles are drawn on undo
                     System.out.println(this.gb.state);
                 }
                 break;
             case KeyEvent.VK_N:
                 System.out.println("NEW GAME");
                 initiateGame();
+                System.out.println(this.gb.state);
         }
     }
 
@@ -295,5 +298,6 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     */
     public static void main(String[] args) {
         Game frame = new Game();
+        System.out.println(frame.gb.state);
     }
 }
