@@ -12,6 +12,8 @@ public class Settings extends JLabel
     private boolean activeMenu;
 
     private int language;
+    private boolean sound;
+
     private Lookup lookup;
 
     /*
@@ -22,6 +24,8 @@ public class Settings extends JLabel
 
         //0 = Swedish, 1= English
         this.language = 1;
+        this.sound = true;
+
         this.lookup = new Lookup();
     }
 
@@ -46,6 +50,10 @@ public class Settings extends JLabel
         this.language = newLang;
     }
 
+    public void changeSound() {
+        this.sound = !this.sound;
+    }
+
     public void setActiveMenu(boolean newBool) {
         this.activeMenu = newBool;
     }
@@ -59,6 +67,10 @@ public class Settings extends JLabel
     */
     public int getLanguage() {
         return this.language;
+    }
+
+    public boolean getSound() {
+        return this.sound;
     }
 
     /*

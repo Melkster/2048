@@ -47,6 +47,10 @@ public class Language {
     *   the same for all languages.
     */
     public String lookupIndexWord(String check) {
+        if (check.equals("language")) {
+            return this.language;
+        }
+        
         int len = indexWordList.size();
         for (int i=0; i<len; i++) {
             if (indexWordList.get(i).equals(check)) {
@@ -66,6 +70,7 @@ public class Language {
         System.out.println(this.language);
 
         for (int i=0; i<len; i++) {
+            System.out.println(indexWordList.get(i));
             System.out.println(translationList.get(i));
         }
     }

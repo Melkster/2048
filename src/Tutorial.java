@@ -10,8 +10,10 @@ import java.awt.*;
 */
 public class Tutorial extends JLabel {
     
-    private boolean swiped = false;
     private Settings set;
+    private boolean active;
+
+    private boolean swiped = false;
 
     /*
     *   Base Constructor
@@ -20,18 +22,26 @@ public class Tutorial extends JLabel {
         this.set = settings;
     }
 
+    public boolean getActive() {
+        return this.active;
+    }
+
+    public void changeActive() {
+        this.active = !this.active;
+    }
+
     /*
     *   Function to check if the x and y values are inside
     *   the constraints of the component.
     */
-    /*public Boolean checkInsideTutorial(int x, int y) {
-        if ((x > this.tutX) && (x < this.tutX+this.tutSize)) {
-            if ((y > this.tutY+30) && (y < this.tutY+this.tutSize+30)) {
+    public Boolean checkInsideTutorial(int x, int y) {
+        if ((x > this.getX()) && (x < this.getX()+this.getWidth())) {
+            if ((y > this.getY()) && (y < this.getY()+this.getHeight())) {
                 return true;
             }
         }
         return false;
-    }*/
+    }
 
     /*
     *   Function to illustrate how a user can conduct and upward or
