@@ -5,9 +5,11 @@ setLang" "Språk
 setSound" "Ljudinställningar
 setRestart" "Omstart
 tut" "Handledning
-info1" "svep i en riktning för att flytta brickorna
-info2" "När två brickor med samma siffra krockar slås dem ihop
-info3" "Målet med spelet är att slå ihop brickor tills du når siffran 2048
+info1" "Svep åt höger eller vänster för att flytta brickorna i riktningen
+info2" "När två brickor med samma siffra krockar slås dem ihop. Tryck Enter för att fortsätta
+info3" "Klicka på U för att ångra ditt val av riktning
+info4" "Klicka på R för att återställa ångrandet med U
+info5" "Målet med spelet är att slå ihop brickor tills du når siffran 2048. Tryck Enter för att fortsätta
 
 Lang
 language" "English
@@ -16,6 +18,8 @@ setLang" "language
 setSound" "Sound Settings
 setRestart" "Restart
 tut" "Tutorial
-info1" "Swipe in a direction to move the tiles
-info2" "When two tiles with the same number collide they merge together
-info3" "The goal of the game is to merge tiles until you reach the number 2048
+info1" "Swipe left or right to move the tiles in that direction
+info2" "When two tiles with the same number collide they merge together. Press Enter to continue
+info3" "Press U in order to regret a choice of direction
+info4" "Press R to return the revert the change from U
+info5" "The goal of the game is to merge tiles until you reach the number 2048. Press Enter to continue

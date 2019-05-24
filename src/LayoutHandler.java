@@ -23,18 +23,19 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     private Settings st;
     private Tutorial tut;
     private SettingsScreen sts;
+    private TutorialScreen tutS;
 
     private int currGBX;
     private int currGBY;
 
     private static int TOP_LAYER = 0;
-    private static int TILE_LAYER = 1;
-    private static int BACKGROUND_LAYER = 2;
+    private static int TILE_LAYER = 2;
+    private static int BACKGROUND_LAYER = 3;
 
     /*
     *   Base Constructor which receives the Components from the Game Class
     */
-    public LayoutHandler(GameBoard theGB, Settings theST, SettingsScreen theSTS, Tutorial theTut, int currWidth) {
+    public LayoutHandler(GameBoard theGB, Settings theST, SettingsScreen theSTS, Tutorial theTut, TutorialScreen theTutS, int currWidth) {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(500, 500));
@@ -43,6 +44,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.st = theST;
         this.sts = theSTS;
         this.tut = theTut;
+        this.tutS = theTutS;
 
         this.currGBX    = currWidth/2-150;
         this.currGBY    = 100;
@@ -59,19 +61,24 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         standardSet(this.tut);
 
         this.sts.setOpaque(false);
+        this.tutS.setOpaque(false);
         this.sts.setBorder(BorderFactory.createLineBorder(Color.black));
+
         this.gb.setBounds(this.currGBX, this.currGBY, GBSize, GBSize);
         this.st.setBounds(origin1.x, origin1.y, GBSize/2, newStSize);
         this.sts.setBounds(this.currGBX, this.currGBY, GBSize, GBSize + newStSize);
         this.tut.setBounds(origin2.x, origin2.y, GBSize/2, newStSize);
+        this.tutS.setBounds(0,0,this.getWidth(), height);
 
         this.sts.setVisible(false);
+        this.tutS.setVisible(false);
 
         this.layeredPane.add(this.gb, BACKGROUND_LAYER);
         this.layeredPane.add(this.st, BACKGROUND_LAYER);
         this.layeredPane.add(this.tut, BACKGROUND_LAYER);
 
         this.layeredPane.add(this.sts,TOP_LAYER);
+        this.layeredPane.add(this.tutS, TOP_LAYER);
 
         addComponentListener(this);
 
@@ -116,6 +123,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.st.setBounds(this.currGBX, this.currGBY+newGBSize, newGBSize/2, newSTSize);
         this.sts.setBounds(this.currGBX, this.currGBY, newGBSize, newGBSize + newSTSize);
         this.tut.setBounds(this.currGBX+newGBSize/2, this.currGBY+newGBSize, newGBSize/2, newSTSize);
+        this.tutS.setBounds(0,0,width, height);
 
         animateTile();
     }
@@ -183,6 +191,16 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
     public void disableActiveMenu() {
         this.sts.setVisible(false);
+        this.repaint();
+    }
+
+    public void setTutorialActive() {
+        this.tutS.setVisible(true);
+        this.repaint();
+    }
+
+    public void disableTutorialActive() {
+        this.tutS.setVisible(false);
         this.repaint();
     }
 
