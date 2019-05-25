@@ -9,7 +9,7 @@ import javax.swing.*;
 *   the game when merged or placed on the board.
 */
 public class Tile extends JLabel implements Cloneable {
-    
+
     public int value;
     public int column;
     public int row;
@@ -29,7 +29,7 @@ public class Tile extends JLabel implements Cloneable {
     public int getTileX(int width) {
         return (this.column*width) + (this.column*10);
     }
-    
+
     /*
     *   Standard getter function
     */
@@ -78,6 +78,7 @@ public class Tile extends JLabel implements Cloneable {
     @Override
     public Tile clone() throws CloneNotSupportedException {
         return (Tile) super.clone();
+        // return new Tile(column, row, value);
     }
 
     /*
@@ -104,7 +105,7 @@ public class Tile extends JLabel implements Cloneable {
 
         // Draw a string such that its base line is at x, y
         g2d.drawString(text, valueX, valueY);
-      
+
         setBackground(TileColor.tileColor(this.value));
     }
 }

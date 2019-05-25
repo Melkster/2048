@@ -19,7 +19,7 @@ import java.util.*;
 public class LayoutHandler extends JPanel implements ComponentListener {
 
     private JLayeredPane layeredPane;
-    private GameBoard gb;
+    public  GameBoard gb;
     private Settings st;
     private Tutorial tut;
     private SettingsScreen sts;

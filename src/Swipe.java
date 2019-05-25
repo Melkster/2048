@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.sound.sampled.*;
 
+import java.util.concurrent.TimeUnit;
+
 /*
 *   Class that constructs a Swiping action.
 *   These actions are put into the stack.
@@ -17,14 +19,16 @@ public class Swipe implements Command  {
     private ArrayList<Tile> collided = new ArrayList<Tile>();
 
     private Settings st;
+    private LayoutHandler lh;
 
     /*
     *   Base Constructor
     */
-    public Swipe(Direction direction, State state, Settings theST) {
+    public Swipe(Direction direction, State state, Settings theST, LayoutHandler lh) {
         this.direction = direction;
         this.newState = state;
         this.st = theST;
+        this.lh = lh;
 
         try {
             this.previousState = newState.clone();
@@ -45,7 +49,17 @@ public class Swipe implements Command  {
                 if (direction == Direction.LEFT || direction == Direction.UP) {
                     push(newState.getTile(column, row), newState);
                 } else if (direction == Direction.RIGHT || direction == Direction.DOWN) {
-                    push(newState.getTile(size - column - 1, size - row - 1), newState);
+                    Tile tile = newState.getTile(size - column - 1, size - row - 1);
+                    try {
+                        Tile oldTile = tile.clone();
+                        push(tile, newState);
+                        if (!(tile instanceof Void)) {
+                            lh.animateTile();
+                            animate(oldTile, tile);
+                        };
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -75,6 +89,38 @@ public class Swipe implements Command  {
 
     public boolean stateChanged() {
         return !(newState.equals(previousState));
+    }
+
+    /**
+     * Animates a Tile from `oldTile`'s position, to its new (current) position
+     * `newTile`.
+     */
+    private void animate(Tile oldTile, Tile newTile) {
+        int x = oldTile.getX();
+        int y = oldTile.getY();
+        int newX = newTile.getX();
+        // int newY = newTile.getY();
+        // System.out.println(newTile.getX());
+        // System.out.println(x);
+        // System.out.println("newX: " + newX);
+        while (x < newX) {
+            int tileSize = lh.gb.getRecSize();
+            // System.out.print("x: " + x);
+            // System.out.print(" < newX: " + newX);
+            // System.out.println("");
+            // TODO: change to oldTile
+            newTile.setBounds(x + 1, y, tileSize, tileSize);
+            // System.out.println("newTile.getX: :" + newTile.getX());
+            lh.revalidate();
+            lh.repaint();
+            x = newTile.getX();
+            // System.out.print("x (2): " + x);
+            try {
+                Thread.sleep(30);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 
     /**

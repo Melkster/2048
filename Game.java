@@ -189,7 +189,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public void move(Direction direction) {
         // Should use Swipe in `direction`, and then `SpawnTile`
         // gb.state should as a side effect be updated by the executed commands
-        Swipe swipe = new Swipe(direction, this.gb.state, this.st);
+        Swipe swipe = new Swipe(direction, this.gb.state, this.st, this.lh);
         commandManager.executeCommand(swipe);
         if (swipe.stateChanged()) {
             commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
@@ -263,7 +263,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         }
         else if (this.tut.getActive()) {
             System.out.println("Hej");
-            //this.tutS.checkPhase(arrow.getKeyCode(), getGame(), this.lh, this.tut, this.commandManager); 
+            //this.tutS.checkPhase(arrow.getKeyCode(), getGame(), this.lh, this.tut, this.commandManager);
             switch (this.tutS.getPhase()) {
                 case 1:
                     if (arrow.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -387,7 +387,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public boolean checkForWin() {
         if (!gb.state.hasEmptyTile()) {
             for (Direction d : Direction.values()) {
-                commandManager.executeCommand(new Swipe(d, gb.state, this.st));
+                commandManager.executeCommand(new Swipe(d, gb.state, this.st, this.lh));
                 if (gb.state.hasEmptyTile()) {
                     commandManager.undoCommand();
                     commandManager.clearRedos();
@@ -404,5 +404,13 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public static void main(String[] args) {
         Game frame = new Game();
         System.out.println(frame.gb.state);
+
+        Tile tile = new Tile(0, 0, 8);
+        frame.gb.state.addTile(tile);
+        frame.lh.addTileToLayout(tile);
+        frame.lh.animateTile();
+
+        Swipe swipe = new Swipe(Direction.RIGHT, frame.gb.state, frame.st, frame.lh);
+        frame.commandManager.executeCommand(swipe);
     }
 }
