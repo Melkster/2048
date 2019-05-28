@@ -114,6 +114,8 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.sts.setBounds(this.currGBX, this.currGBY, newGBSize, newGBSize + newSTSize);
         this.tut.setBounds(this.currGBX+newGBSize/2, this.currGBY+newGBSize, newGBSize/2, newSTSize);
 
+        this.gb.updateGBInfo();
+
         animateTile();
     }
 
