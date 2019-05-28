@@ -181,6 +181,21 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.repaint();
     }
 
+    public void drawTile(Tile tile, int x, int y) {
+        standardSet(tile);
+
+        int recSize = this.gb.getRecSize();
+        int tileX = this.currGBX + this.gb.getStartX() + x + 15;
+        int tileY = this.currGBY + this.gb.getStartY() + y + 15;
+
+        tile.setBounds(tileX, tileY, recSize-10, recSize-10);
+
+        this.layeredPane.add(tile, TILE_LAYER);
+
+        this.revalidate();
+        this.repaint();
+    }
+
     /*
     *   Function to create an Interactie JLabel to work as setting interface
     */

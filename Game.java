@@ -403,8 +403,9 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     */
     public static void main(String[] args) {
         Game frame = new Game();
-        System.out.println(frame.gb.state);
+        // System.out.println(frame.gb.state);
 
+        // This test code spawns a new tile and animates it from left to right
         Tile tile = new Tile(0, 0, 8);
         frame.gb.state.addTile(tile);
         frame.lh.addTileToLayout(tile);

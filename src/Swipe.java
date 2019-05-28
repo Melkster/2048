@@ -54,7 +54,7 @@ public class Swipe implements Command  {
                         Tile oldTile = tile.clone();
                         push(tile, newState);
                         if (!(tile instanceof Void)) {
-                            lh.animateTile();
+                            // lh.animateTile();
                             animate(oldTile, tile);
                         };
                     } catch (Exception e) {
@@ -96,31 +96,25 @@ public class Swipe implements Command  {
      * `newTile`.
      */
     private void animate(Tile oldTile, Tile newTile) {
-        int x = oldTile.getX();
-        int y = oldTile.getY();
+        int tileSize = lh.gb.getRecSize();
+        int x = oldTile.getTileX(tileSize);
+        int y = oldTile.getTileY(tileSize);
         int newX = newTile.getX();
-        // int newY = newTile.getY();
-        // System.out.println(newTile.getX());
-        // System.out.println(x);
-        // System.out.println("newX: " + newX);
-        while (x < newX) {
-            int tileSize = lh.gb.getRecSize();
-            // System.out.print("x: " + x);
-            // System.out.print(" < newX: " + newX);
-            // System.out.println("");
-            // TODO: change to oldTile
-            newTile.setBounds(x + 1, y, tileSize, tileSize);
-            // System.out.println("newTile.getX: :" + newTile.getX());
-            lh.revalidate();
-            lh.repaint();
-            x = newTile.getX();
-            // System.out.print("x (2): " + x);
+        lh.drawTile(oldTile, oldTile.getTileX(tileSize), oldTile.getTileY(tileSize));
+        while (x < newX - 10) { // TODO: remove hard coded value
+            System.out.print(x + " < ");
+            System.out.println(newX);
+            lh.drawTile(oldTile, x, y);
+            x++;
+
+            // TODO: control the animation speed
             try {
-                Thread.sleep(30);
+                Thread.sleep(4);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
         }
+        // lh.animateTile();
     }
 
     /**
