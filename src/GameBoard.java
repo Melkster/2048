@@ -34,6 +34,17 @@ public class GameBoard extends JLabel
         this.state = new State(this.state.size);
     }
 
+    public void updateGBInfo() {
+        int width = getWidth();
+        int height = getHeight();
+        int recHei = height / 8;
+
+        this.startX = ((width/2)-((recHei*4+50)/2));
+        this.startY = ((height/2)-((recHei*4+50)/2));
+        this.recSize = recHei;
+        this.size = ((recHei*4)+50);
+    }
+
     /*
     *   Standard getter function for private variable
     */
