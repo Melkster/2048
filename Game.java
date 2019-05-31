@@ -198,7 +198,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public void move(Direction direction) {
         // Should use Swipe in `direction`, and then `SpawnTile`
         // gb.state should as a side effect be updated by the executed commands
-        Swipe swipe = new Swipe(direction, this.gb.state, this.st);
+        Swipe swipe = new Swipe(direction, this.getGame(), this.gb, this.gb.state, this.st, this.lh);
         commandManager.executeCommand(swipe);
         if (swipe.stateChanged()) {
             commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
@@ -398,7 +398,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     public boolean checkForWin() {
         if (!gb.state.hasEmptyTile()) {
             for (Direction d : Direction.values()) {
-                commandManager.executeCommand(new Swipe(d, gb.state, this.st));
+                commandManager.executeCommand(new Swipe(d, this.getGame(), this.gb, this.gb.state, this.st, this.lh));
                 if (gb.state.hasEmptyTile()) {
                     commandManager.undoCommand();
                     commandManager.clearRedos();

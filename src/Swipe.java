@@ -1,5 +1,6 @@
 package src;
 
+import javax.swing.JFrame;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -16,15 +17,21 @@ public class Swipe implements Command  {
     private State newState;
     private ArrayList<Tile> collided = new ArrayList<Tile>();
 
+    private JFrame gm;
     private Settings st;
+    private GameBoard gb;
+    private LayoutHandler lh;
 
     /*
     *   Base Constructor
     */
-    public Swipe(Direction direction, State state, Settings theST) {
+    public Swipe(Direction direction, JFrame game, GameBoard gameB, State state, Settings theST, LayoutHandler lhe) {
         this.direction = direction;
         this.newState = state;
+        this.gm = game;
         this.st = theST;
+        this.gb = gameB;
+        this.lh = lhe;
 
         try {
             this.previousState = newState.clone();
@@ -40,19 +47,134 @@ public class Swipe implements Command  {
     @Override
     public void execute() {
         int size = previousState.size;
-        for (int column = 0; column < size; column++) {
-            for (int row = 0; row < size; row++) {
-                if (direction == Direction.LEFT || direction == Direction.UP) {
-                    push(newState.getTile(column, row), newState);
-                } else if (direction == Direction.RIGHT || direction == Direction.DOWN) {
-                    push(newState.getTile(size - column - 1, size - row - 1), newState);
+        ArrayList<Tile> older = new ArrayList<Tile>();
+        ArrayList<Tile> newer = new ArrayList<Tile>();
+
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                try {
+                    Tile tile;
+                    if (direction == Direction.UP) {
+                        tile = newState.getTile(column, row);
+                    }
+                    else if (direction == Direction.DOWN) {
+                        tile = newState.getTile(column, size - row - 1);
+                    }
+                    else if (direction == Direction.LEFT) {
+                        tile = newState.getTile(column, row);
+                    }
+                    else {
+                        tile = newState.getTile(size - column - 1, row);
+                    }
+
+                    Tile tmp = tile.clone();
+                    push(tile, newState);
+
+                    if ((!(tmp instanceof Void)) && (!(tile instanceof Void))) {
+                        older.add(tmp);
+                        newer.add(tile);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
+
+        animate(older, newer);
+
         collided.clear();
         if (this.st.getSound()) {
             playSound("src/sounds/swipe-sound2.wav");
         }
+    }
+
+    public void animate(ArrayList<Tile> older, ArrayList<Tile> newer) {
+        int theSize = older.size();
+        
+        int[] oldX = new int[theSize];
+        int[] oldY = new int[theSize];
+        int[] newX = new int[theSize];
+        int[] newY = new int[theSize];
+
+        ArrayList<Boolean> notDone = new ArrayList<Boolean>();
+
+        System.out.println("HERE");
+
+        for (int i = 0; i<theSize; i++) {
+            notDone.add(true);
+            oldX[i] = (older.get(i).getTileX(this.gb.getRecSize()));
+            oldY[i] = (older.get(i).getTileY(this.gb.getRecSize()));
+            newX[i] = (newer.get(i).getTileX(this.gb.getRecSize()));
+            newY[i] = (newer.get(i).getTileY(this.gb.getRecSize()));
+        }
+
+        /*for (int k=0; k<theSize; k++) {
+            System.out.println("Element " + k);
+            System.out.println(notDone.get(k));
+            System.out.println("OldX " + oldX[k]);
+            System.out.println("OldY " + oldY[k]);
+            System.out.println("NewX " + newX[k]);
+            System.out.println("NewY " + newY[k]);
+        }*/
+
+        this.lh.removeAllTiles();
+        //this.lh.repaintLayoutHandler();
+        this.gm.revalidate();
+        this.gm.repaint();
+
+        while(notDone.contains(true)) {
+            this.lh.addAllTiles(older, oldX, oldY);
+            //this.lh.repaintLayoutHandler();
+            this.gm.revalidate();
+            this.gm.repaint();
+
+            for (int x=0; x<theSize; x++) {
+                if (notDone.get(x)) {
+                    if (direction == Direction.UP) {
+                        oldY[x] += -1;
+                        if (oldY[x] <= newY[x]) {
+                            notDone.set(x, false);
+                        }
+                    }
+                    else if (direction == Direction.DOWN) {
+                        oldY[x] += 1;
+                        if (oldY[x] >= newY[x]) {
+                            notDone.set(x, false);
+                        }
+                    }
+                    else if (direction == Direction.LEFT) {
+                        oldX[x] += -1;
+                        if (oldX[x] <= newX[x]) {
+                            notDone.set(x, false);
+                        }
+                    }
+                    else if (direction == Direction.RIGHT) {
+                        oldX[x] += 1;
+                        if (oldX[x] >= newX[x]) {
+                            notDone.set(x, false);
+                        }
+                    }
+                }
+            }
+
+            try {
+                Thread.sleep(1);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            this.lh.removeAllTiles();
+            //this.lh.repaintLayoutHandler();
+            this.gm.revalidate();
+            this.gm.repaint();
+        }
+
+        this.lh.removeAllTiles();
+        //this.lh.repaintLayoutHandler();
+        this.gm.revalidate();
+        this.gm.repaint();
     }
 
     /*

@@ -160,6 +160,88 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.layeredPane.add(tile, TILE_LAYER);
 
+        repaintLayoutHandler();
+    }
+
+    public void removeAllTiles() {
+        Component[] tmp = this.layeredPane.getComponentsInLayer(0);
+
+        for(Component curr : tmp) {
+            if (curr instanceof Tile) {
+                this.layeredPane.remove(curr);
+            }
+        }
+        repaintLayoutHandler();
+    }
+
+    public void removeTileFromLayout(Tile tile) {
+        Component[] tmp = this.layeredPane.getComponentsInLayer(0);
+
+        for(Component curr : tmp) {
+            if (curr instanceof Tile) {
+                if ((Tile) curr == tile) {
+                    this.layeredPane.remove(curr);
+                }
+            }
+        }
+    }
+
+    public void addAllTiles(ArrayList<Tile> newList, int[] newX, int[] newY) {
+
+        //System.out.println("oldX = " + newX[0]);
+        //System.out.println("oldY = " + newY[0]);
+
+        int theSize = newList.size();
+        for(int i=0; i<theSize; i++) {
+            Tile curr = newList.get(i);
+            if ((curr instanceof Tile) && (!(curr instanceof Void))) {
+                int newSize = this.gb.getRecSize();
+                int newTx = this.currGBX + this.gb.getStartX() + newX[i] + 15;
+                int newTy = this.currGBY + this.gb.getStartY() + newY[i] + 15;
+                curr.setBounds(newTx, newTy, newSize-10, newSize-10);
+                getComponentsAndPrint();
+                this.layeredPane.add(curr, TILE_LAYER);
+                getComponentsAndPrint();
+            }
+
+            try {
+                Thread.sleep(200);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        repaintLayoutHandler();
+    }
+
+    public void getComponentsAndPrint() {
+        Component[] tmp = this.layeredPane.getComponentsInLayer(0);
+
+        for(Component curr : tmp) {
+            if (curr instanceof Tile) {
+                System.out.println(curr);
+            }
+        }
+
+        System.out.println();
+    }
+
+    public void moveTileInLayout(Tile tile, int x, int y) {
+        standardSet(tile);
+
+        int recSize = this.gb.getRecSize();
+        int tileX = this.currGBX + this.gb.getStartX() + x + 15;
+        int tileY = this.currGBY + this.gb.getStartY() + y + 15;
+
+        tile.setBounds(tileX, tileY, recSize-10, recSize-10);
+
+        this.layeredPane.add(tile, TILE_LAYER);
+
+        repaintLayoutHandler();
+    }
+
+    public void repaintLayoutHandler() {
         this.revalidate();
         this.repaint();
     }
@@ -177,8 +259,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
             }
         }
 
-        this.revalidate();
-        this.repaint();
+        repaintLayoutHandler();
 
         ArrayList<Tile> newList = new ArrayList<Tile>();
 
@@ -198,15 +279,13 @@ public class LayoutHandler extends JPanel implements ComponentListener {
             }
         }
 
-        this.revalidate();
-        this.repaint();
+        repaintLayoutHandler();
     }
 
     public void changeArrowPos(int x, int y) {
         this.arrow.setBounds(x, y, this.arrow.getWidth(), this.arrow.getHeight());
 
-        this.revalidate();
-        this.repaint();
+        repaintLayoutHandler();
     }
 
     /*
