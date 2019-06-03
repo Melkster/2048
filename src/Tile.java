@@ -107,5 +107,6 @@ public class Tile extends JLabel implements Cloneable {
         g2d.drawString(text, valueX, valueY);
 
         setBackground(TileColor.tileColor(this.value));
+        System.out.println("Tile " + this + " drawn");
     }
 }

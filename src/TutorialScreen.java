@@ -39,12 +39,12 @@ public class TutorialScreen extends JLabel {
             case 1:
                 if (keycode == KeyEvent.VK_RIGHT) {
                     gm.move(Direction.RIGHT);
-                    lh.animateTile();
+                    lh.drawTiles();
                     nextPhase();
                 }
                 else if (keycode == KeyEvent.VK_LEFT) {
                     gm.move(Direction.LEFT);
-                    lh.animateTile();
+                    lh.drawTiles();
                     nextPhase();
                 }
                 break;
@@ -57,8 +57,8 @@ public class TutorialScreen extends JLabel {
                 if (keycode == KeyEvent.VK_U) {
                     cm.undoCommand();
                     cm.undoCommand();
-                    lh.animateTile();
-                    lh.animateTile(); // Without running this twice, sometimes not all tiles are drawn on undo
+                    lh.drawTiles();
+                    lh.drawTiles(); // Without running this twice, sometimes not all tiles are drawn on undo
                     nextPhase();
                 }
                 break;
@@ -66,7 +66,7 @@ public class TutorialScreen extends JLabel {
                 if (keycode == KeyEvent.VK_R) {
                     cm.redoCommand();
                     cm.redoCommand();
-                    lh.animateTile();
+                    lh.drawTiles();
                     nextPhase();
                 }
                 break;
@@ -89,7 +89,7 @@ public class TutorialScreen extends JLabel {
         int height = this.getHeight();
 
         Graphics2D g2d = (Graphics2D) g;
-        
+
         // Set the desired font if different from default font
         g2d.setFont(new Font("Serif", Font.PLAIN, 20));
 
@@ -141,6 +141,6 @@ public class TutorialScreen extends JLabel {
 
         g2d.drawString(txt3, valueX2, valueY2);
         g2d.drawString(txt4, valueX3, valueY3);
-       
+
     }
 }

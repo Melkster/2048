@@ -164,7 +164,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
 
         this.commandManager.clearUndos();
 
-        this.lh.animateTile();
+        this.lh.drawTiles();
     }
 
     public void initiateTutorial() {
@@ -179,7 +179,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         this.lh.addTileToLayout(tile1);
         this.lh.addTileToLayout(tile2);
 
-        this.lh.animateTile();
+        this.lh.drawTiles();
     }
 
     /*
@@ -196,7 +196,6 @@ public class Game extends JFrame implements MouseListener, KeyListener {
             System.out.println(this.gb.state);
         }
         else commandManager.undoCommand();
-        lh.animateTile();
     }
 
     /*
@@ -219,29 +218,29 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                 case KeyEvent.VK_UP:
                     System.out.println("UP");
                     move(Direction.UP);
-                    this.lh.animateTile();
+                    this.lh.drawTiles();
                     break;
                 case KeyEvent.VK_DOWN:
                     System.out.println("DOWN");
                     move(Direction.DOWN);
-                    this.lh.animateTile();
+                    this.lh.drawTiles();
                     break;
                 case KeyEvent.VK_RIGHT:
                     System.out.println("RIGHT");
                     move(Direction.RIGHT);
-                    this.lh.animateTile();
+                    this.lh.drawTiles();
                     break;
                 case KeyEvent.VK_LEFT:
                     System.out.println("LEFT");
                     move(Direction.LEFT);
-                    this.lh.animateTile();
+                    this.lh.drawTiles();
                     break;
                 case KeyEvent.VK_R:
                     System.out.println("REDO");
                     if(commandManager.isRedoAvailable()) {
                         commandManager.redoCommand();
                         commandManager.redoCommand();
-                        this.lh.animateTile();
+                        this.lh.drawTiles();
                         System.out.println(this.gb.state);
                     }
                     break;
@@ -250,8 +249,8 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                     if (commandManager.isUndoAvailable()) {
                         commandManager.undoCommand();
                         commandManager.undoCommand();
-                        this.lh.animateTile();
-                        this.lh.animateTile(); // Without running this twice, sometimes not all tiles are drawn on undo
+                        this.lh.drawTiles();
+                        this.lh.drawTiles(); // Without running this twice, sometimes not all tiles are drawn on undo
                         System.out.println(this.gb.state);
                     }
                     break;
@@ -269,13 +268,13 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                     if (arrow.getKeyCode() == KeyEvent.VK_RIGHT) {
                         System.out.println("RIGHT");
                         move(Direction.RIGHT);
-                        this.lh.animateTile();
+                        this.lh.drawTiles();
                         this.tutS.nextPhase();
                     }
                     else if (arrow.getKeyCode() == KeyEvent.VK_LEFT) {
                         System.out.println("LEFT");
                         move(Direction.LEFT);
-                        this.lh.animateTile();
+                        this.lh.drawTiles();
                         this.tutS.nextPhase();
                     }
                     break;
@@ -288,8 +287,8 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                     if (arrow.getKeyCode() == KeyEvent.VK_U) {
                         commandManager.undoCommand();
                         commandManager.undoCommand();
-                        this.lh.animateTile();
-                        this.lh.animateTile(); // Without running this twice, sometimes not all tiles are drawn on undo
+                        this.lh.drawTiles();
+                        this.lh.drawTiles(); // Without running this twice, sometimes not all tiles are drawn on undo
                         System.out.println(this.gb.state);
                         this.tutS.nextPhase();
                     }
@@ -298,7 +297,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                     if (arrow.getKeyCode() == KeyEvent.VK_R) {
                         commandManager.redoCommand();
                         commandManager.redoCommand();
-                        this.lh.animateTile();
+                        this.lh.drawTiles();
                         System.out.println(this.gb.state);
                         this.tutS.nextPhase();
                     }
@@ -409,7 +408,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         Tile tile = new Tile(0, 0, 8);
         frame.gb.state.addTile(tile);
         frame.lh.addTileToLayout(tile);
-        frame.lh.animateTile();
+        frame.lh.drawTiles();
 
         Swipe swipe = new Swipe(Direction.RIGHT, frame.gb.state, frame.st, frame.lh);
         frame.commandManager.executeCommand(swipe);

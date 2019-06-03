@@ -54,7 +54,7 @@ public class Swipe implements Command  {
                         Tile oldTile = tile.clone();
                         push(tile, newState);
                         if (!(tile instanceof Void)) {
-                            // lh.animateTile();
+                            // lh.drawTiles();
                             animate(oldTile, tile);
                         };
                     } catch (Exception e) {
@@ -102,8 +102,8 @@ public class Swipe implements Command  {
         int newX = newTile.getX();
         lh.drawTile(oldTile, oldTile.getTileX(tileSize), oldTile.getTileY(tileSize));
         while (x < newX - 10) { // TODO: remove hard coded value
-            System.out.print(x + " < ");
-            System.out.println(newX);
+            // System.out.print(x + " < ");
+            // System.out.println(newX);
             lh.drawTile(oldTile, x, y);
             x++;
 
@@ -114,7 +114,7 @@ public class Swipe implements Command  {
                 Thread.currentThread().interrupt();
             }
         }
-        // lh.animateTile();
+        // lh.drawTiles();
     }
 
     /**

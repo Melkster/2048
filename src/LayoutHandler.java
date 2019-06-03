@@ -125,7 +125,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.tut.setBounds(this.currGBX+newGBSize/2, this.currGBY+newGBSize, newGBSize/2, newSTSize);
         this.tutS.setBounds(0,0,width, height);
 
-        animateTile();
+        drawTiles();
     }
 
     public void addTileToLayout(Tile tile) {
@@ -147,7 +147,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     *   Function to handle component resizing of Tiles either
     *   when the window changes size or when Tiles are moved.
     */
-    public void animateTile() {
+    public void drawTiles() {
         Component[] tmp = this.layeredPane.getComponentsInLayer(0);
 
         for(Component curr : tmp) {
@@ -194,6 +194,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.revalidate();
         this.repaint();
+        System.out.println("repaint() called in drawTile()");
     }
 
     /*
