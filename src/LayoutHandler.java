@@ -101,7 +101,6 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     @Override
     public void componentResized(ComponentEvent e) {
         // This is only called when the user releases the mouse button.
-        System.out.println("componentResized");
         int width = getWidth();
         int height = getHeight();
         int newGBSize;
@@ -194,7 +193,6 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.revalidate();
         this.repaint();
-        System.out.println("repaint() called in drawTile()");
     }
 
     /*

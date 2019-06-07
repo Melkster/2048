@@ -84,14 +84,11 @@ public class Game extends JFrame implements MouseListener, KeyListener {
 
         y = y - this.getInsets().top;
 
-        System.out.println("Mouse Clicked at X: " + x + " - Y: " + y);
         if (!this.st.getActiveMenu() && (!(this.tut.getActive()))) {
             if(this.gb.checkInsideGB(x,y)) {
-                System.out.println("Inside GameBoard");
             }
             else if (this.st.checkInsideSetting(x,y)) {
                 this.lh.setActiveMenu();
-                System.out.println("Inside Setting");
             }
             else if (this.tut.checkInsideTutorial(x,y)) {
                 this.tut.changeActive();
@@ -101,17 +98,12 @@ public class Game extends JFrame implements MouseListener, KeyListener {
 
                 this.revalidate();
                 this.repaint();
-                System.out.println("Inside Tutorial");
-            }
-            else {
-                System.out.println("Outside GameBoard and Setting");
             }
         }
         else if (this.st.getActiveMenu()){
             int checkVal = this.sts.checkInsideSTS(x,y);
             switch (checkVal) {
                 case 0:
-                    System.out.println("Inside Language Menu");
                     if (this.st.getLanguage() == 0) {
                         this.st.setLanguage(1);
                     }
@@ -122,13 +114,11 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                     this.repaint();
                     break;
                 case 1:
-                    System.out.println("Inside Sound Menu");
                     this.st.changeSound();
                     this.revalidate();
                     this.repaint();
                     break;
                 case 2:
-                    System.out.println("Inside Restart");
                     this.initiateGame();
                     this.lh.disableActiveMenu();
                     this.st.setActiveMenu(false);
@@ -138,12 +128,10 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                 default:
                     this.lh.disableActiveMenu();
                     this.st.setActiveMenu(false);
-                    System.out.println("Not inside STS");
                     break;
             }
         }
         else {
-            System.out.println("Hej");
             //TODO: Run Tutorial
             /*this.tutS.nextPhase();
 
@@ -193,7 +181,6 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         commandManager.executeCommand(swipe);
         if (swipe.stateChanged()) {
             commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
-            System.out.println(this.gb.state);
         }
         else commandManager.undoCommand();
     }
@@ -216,63 +203,50 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         if (!this.st.getActiveMenu() && (!(this.tut.getActive()))) {
             switch (arrow.getKeyCode()){
                 case KeyEvent.VK_UP:
-                    System.out.println("UP");
                     move(Direction.UP);
                     this.lh.drawTiles();
                     break;
                 case KeyEvent.VK_DOWN:
-                    System.out.println("DOWN");
                     move(Direction.DOWN);
                     this.lh.drawTiles();
                     break;
                 case KeyEvent.VK_RIGHT:
-                    System.out.println("RIGHT");
                     move(Direction.RIGHT);
                     this.lh.drawTiles();
                     break;
                 case KeyEvent.VK_LEFT:
-                    System.out.println("LEFT");
                     move(Direction.LEFT);
                     this.lh.drawTiles();
                     break;
                 case KeyEvent.VK_R:
-                    System.out.println("REDO");
                     if(commandManager.isRedoAvailable()) {
                         commandManager.redoCommand();
                         commandManager.redoCommand();
                         this.lh.drawTiles();
-                        System.out.println(this.gb.state);
                     }
                     break;
                 case KeyEvent.VK_U:
-                    System.out.println("UNDO");
                     if (commandManager.isUndoAvailable()) {
                         commandManager.undoCommand();
                         commandManager.undoCommand();
                         this.lh.drawTiles();
                         this.lh.drawTiles(); // Without running this twice, sometimes not all tiles are drawn on undo
-                        System.out.println(this.gb.state);
                     }
                     break;
                 case KeyEvent.VK_N:
-                    System.out.println("NEW GAME");
                     initiateGame();
-                    System.out.println(this.gb.state);
             }
         }
         else if (this.tut.getActive()) {
-            System.out.println("Hej");
             //this.tutS.checkPhase(arrow.getKeyCode(), getGame(), this.lh, this.tut, this.commandManager);
             switch (this.tutS.getPhase()) {
                 case 1:
                     if (arrow.getKeyCode() == KeyEvent.VK_RIGHT) {
-                        System.out.println("RIGHT");
                         move(Direction.RIGHT);
                         this.lh.drawTiles();
                         this.tutS.nextPhase();
                     }
                     else if (arrow.getKeyCode() == KeyEvent.VK_LEFT) {
-                        System.out.println("LEFT");
                         move(Direction.LEFT);
                         this.lh.drawTiles();
                         this.tutS.nextPhase();
@@ -289,7 +263,6 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                         commandManager.undoCommand();
                         this.lh.drawTiles();
                         this.lh.drawTiles(); // Without running this twice, sometimes not all tiles are drawn on undo
-                        System.out.println(this.gb.state);
                         this.tutS.nextPhase();
                     }
                     break;
@@ -298,7 +271,6 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                         commandManager.redoCommand();
                         commandManager.redoCommand();
                         this.lh.drawTiles();
-                        System.out.println(this.gb.state);
                         this.tutS.nextPhase();
                     }
                     break;
