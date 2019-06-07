@@ -16,9 +16,9 @@ public class Arrow extends JLabel {
 
         g2d.setColor(new Color(0, 0, 0));
 
-        int xval = (width/4);
-        int yval = (height/4);
+        int xval = width/4;
+        int yval = height/4;
 
-        g2d.fillRect(xval, yval, (width/2), (height/2));
+        g2d.fillRect(0, 0, width, height);
     }
 }

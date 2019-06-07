@@ -97,7 +97,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                 this.initiateTutorial();
 
                 AnimatedActionListener taskPerformer = new AnimatedActionListener(this.tutS, this.lh);
-                Timer timer = new Timer(50 ,taskPerformer);
+                Timer timer = new Timer(25 ,taskPerformer);
 
                 taskPerformer.setTimer(timer);
 
