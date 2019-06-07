@@ -34,54 +34,6 @@ public class TutorialScreen extends JLabel {
         }
     }
 
-    /*public void checkPhase(int keycode, Game gm, LayoutHandler lh, Tutorial tut, CommandManager cm) {
-        switch (this.phase) {
-            case 1:
-                if (keycode == KeyEvent.VK_RIGHT) {
-                    gm.move(Direction.RIGHT);
-                    lh.drawTiles();
-                    nextPhase();
-                }
-                else if (keycode == KeyEvent.VK_LEFT) {
-                    gm.move(Direction.LEFT);
-                    lh.drawTiles();
-                    nextPhase();
-                }
-                break;
-            case 2:
-                if (keycode == KeyEvent.VK_ENTER) {
-                    nextPhase();
-                }
-                break;
-            case 3:
-                if (keycode == KeyEvent.VK_U) {
-                    cm.undoCommand();
-                    cm.undoCommand();
-                    lh.drawTiles();
-                    lh.drawTiles(); // Without running this twice, sometimes not all tiles are drawn on undo
-                    nextPhase();
-                }
-                break;
-            case 4:
-                if (keycode == KeyEvent.VK_R) {
-                    cm.redoCommand();
-                    cm.redoCommand();
-                    lh.drawTiles();
-                    nextPhase();
-                }
-                break;
-            case 5:
-                if (keycode == KeyEvent.VK_ENTER) {
-                    nextPhase();
-                }
-                break;
-        }
-        if (this.phase == 0) {
-            tut.changeActive();
-            lh.disableTutorialActive();
-        }
-    }*/
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
