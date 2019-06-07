@@ -96,6 +96,15 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                 this.tutS.nextPhase();
                 this.initiateTutorial();
 
+                AnimatedActionListener taskPerformer = new AnimatedActionListener(this.tutS, this.lh);
+                Timer timer = new Timer(50 ,taskPerformer);
+
+                taskPerformer.setTimer(timer);
+
+                timer.setRepeats(true);
+                timer.start();
+
+
                 this.revalidate();
                 this.repaint();
             }
@@ -244,11 +253,13 @@ public class Game extends JFrame implements MouseListener, KeyListener {
                         move(Direction.RIGHT);
                         this.lh.drawTiles();
                         this.tutS.nextPhase();
+                        this.lh.disableArrowActive();
                     }
                     else if (arrow.getKeyCode() == KeyEvent.VK_LEFT) {
                         move(Direction.LEFT);
                         this.lh.drawTiles();
                         this.tutS.nextPhase();
+                        this.lh.disableArrowActive();
                     }
                     break;
                 case 2:

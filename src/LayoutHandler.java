@@ -24,7 +24,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     private Tutorial tut;
     private SettingsScreen sts;
     private TutorialScreen tutS;
-
+    private Arrow arrow;
     private int currGBX;
     private int currGBY;
 
@@ -45,13 +45,18 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.sts = theSTS;
         this.tut = theTut;
         this.tutS = theTutS;
+        this.arrow = new Arrow();
 
         this.currGBX    = currWidth/2-150;
         this.currGBY    = 100;
         int GBSize      = 500;
 
+        int arrowWidth = 80;
+        int arrowHeight = 40;
+
         Point origin1 = new Point(this.currGBX, this.currGBY+GBSize);
         Point origin2 = new Point(this.currGBX+GBSize/2, this.currGBY+GBSize);
+        Point origin3 = new Point((this.currGBX-arrowWidth/2), (this.currGBY-arrowHeight));
 
         int height = getHeight();
         int newStSize = height/10;
@@ -62,6 +67,8 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.sts.setOpaque(false);
         this.tutS.setOpaque(false);
+        this.arrow.setOpaque(true);
+        this.arrow.setBorder(BorderFactory.createLineBorder(Color.black));
         this.sts.setBorder(BorderFactory.createLineBorder(Color.black));
 
         this.gb.setBounds(this.currGBX, this.currGBY, GBSize, GBSize);
@@ -69,14 +76,15 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.sts.setBounds(this.currGBX, this.currGBY, GBSize, GBSize + newStSize);
         this.tut.setBounds(origin2.x, origin2.y, GBSize/2, newStSize);
         this.tutS.setBounds(0,0,this.getWidth(), height);
-
+        this.arrow.setBounds(origin3.x, origin3.y, arrowWidth, arrowHeight);
         this.sts.setVisible(false);
         this.tutS.setVisible(false);
+        this.arrow.setVisible(false);
 
         this.layeredPane.add(this.gb, BACKGROUND_LAYER);
         this.layeredPane.add(this.st, BACKGROUND_LAYER);
         this.layeredPane.add(this.tut, BACKGROUND_LAYER);
-
+        this.layeredPane.add(this.arrow, BACKGROUND_LAYER);
         this.layeredPane.add(this.sts,TOP_LAYER);
         this.layeredPane.add(this.tutS, TOP_LAYER);
 
@@ -91,6 +99,10 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     private void standardSet(JLabel temp) {
         temp.setOpaque(true);
         temp.setBorder(BorderFactory.createLineBorder(Color.black));
+    }
+
+    public Arrow getArrow() {
+        return this.arrow;
     }
 
     /*
@@ -123,6 +135,10 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.sts.setBounds(this.currGBX, this.currGBY, newGBSize, newGBSize + newSTSize);
         this.tut.setBounds(this.currGBX+newGBSize/2, this.currGBY+newGBSize, newGBSize/2, newSTSize);
         this.tutS.setBounds(0,0,width, height);
+
+        this.gb.updateGBInfo();
+
+        this.arrow.setBounds((this.currGBX-this.arrow.getWidth()/2), (this.currGBY-this.arrow.getHeight()), this.arrow.getWidth(), this.arrow.getHeight());
 
         drawTiles();
     }
@@ -195,6 +211,13 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.repaint();
     }
 
+    public void changeArrowPos(int x, int y) {
+        this.arrow.setBounds(x, y, this.arrow.getWidth(), this.arrow.getHeight());
+
+        this.revalidate();
+        this.repaint();
+    }
+
     /*
     *   Function to create an Interactie JLabel to work as setting interface
     */
@@ -215,6 +238,16 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
     public void disableTutorialActive() {
         this.tutS.setVisible(false);
+        this.repaint();
+    }
+
+    public void setArrowActive() {
+        this.arrow.setVisible(true);
+        this.repaint();
+    }
+
+    public void disableArrowActive() {
+        this.arrow.setVisible(false);
         this.repaint();
     }
 

@@ -141,6 +141,5 @@ public class TutorialScreen extends JLabel {
 
         g2d.drawString(txt3, valueX2, valueY2);
         g2d.drawString(txt4, valueX3, valueY3);
-
     }
 }
