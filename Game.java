@@ -181,8 +181,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         commandManager.executeCommand(swipe);
         if (swipe.stateChanged()) {
             commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
-        }
-        else commandManager.undoCommand();
+        } else commandManager.undoCommand();
     }
 
     /*
@@ -374,15 +373,5 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     */
     public static void main(String[] args) {
         Game frame = new Game();
-        // System.out.println(frame.gb.state);
-
-        // This test code spawns a new tile and animates it from left to right
-        Tile tile = new Tile(0, 0, 8);
-        frame.gb.state.addTile(tile);
-        frame.lh.addTileToLayout(tile);
-        frame.lh.drawTiles();
-
-        Swipe swipe = new Swipe(Direction.RIGHT, frame.gb.state, frame.st, frame.lh);
-        frame.commandManager.executeCommand(swipe);
     }
 }

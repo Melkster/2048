@@ -54,8 +54,7 @@ public class Swipe implements Command  {
                         Tile oldTile = tile.clone();
                         push(tile, newState);
                         if (!(tile instanceof Void)) {
-                            // lh.drawTiles();
-                            animate(oldTile, tile);
+                            // animate(oldTile, tile);
                         };
                     } catch (Exception e) {
                         e.printStackTrace();
