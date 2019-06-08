@@ -51,8 +51,6 @@ public class AnimatedActionListener implements ActionListener {
         this.startX = this.x - this.currCount;
         this.LIMIT = this.arrow.getWidth()/2;
 
-        System.out.println(this.currCount);
-
         if (valAdd < 0) {
             this.currCount--;
         }
@@ -72,7 +70,6 @@ public class AnimatedActionListener implements ActionListener {
         this.lh.changeArrowPos(this.x,this.y);
 
         if (this.tutS.getPhase() != 1){
-            System.out.println("I Exit");
             this.timer.stop();
             this.lh.disableArrowActive();
         }

@@ -19,14 +19,12 @@ import java.util.*;
 public class LayoutHandler extends JPanel implements ComponentListener {
 
     private JLayeredPane layeredPane;
-    private GameBoard gb;
+    public  GameBoard gb;
     private Settings st;
     private Tutorial tut;
     private SettingsScreen sts;
     private TutorialScreen tutS;
-
     private Arrow arrow;
-
     private int currGBX;
     private int currGBY;
 
@@ -47,7 +45,6 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.sts = theSTS;
         this.tut = theTut;
         this.tutS = theTutS;
-
         this.arrow = new Arrow();
 
         this.currGBX    = currWidth/2-150;
@@ -80,7 +77,6 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.tut.setBounds(origin2.x, origin2.y, GBSize/2, newStSize);
         this.tutS.setBounds(0,0,this.getWidth(), height);
         this.arrow.setBounds(origin3.x, origin3.y, arrowWidth, arrowHeight);
-
         this.sts.setVisible(false);
         this.tutS.setVisible(false);
         this.arrow.setVisible(false);
@@ -89,7 +85,6 @@ public class LayoutHandler extends JPanel implements ComponentListener {
         this.layeredPane.add(this.st, BACKGROUND_LAYER);
         this.layeredPane.add(this.tut, BACKGROUND_LAYER);
         this.layeredPane.add(this.arrow, BACKGROUND_LAYER);
-
         this.layeredPane.add(this.sts,TOP_LAYER);
         this.layeredPane.add(this.tutS, TOP_LAYER);
 
@@ -118,7 +113,6 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     @Override
     public void componentResized(ComponentEvent e) {
         // This is only called when the user releases the mouse button.
-        System.out.println("componentResized");
         int width = getWidth();
         int height = getHeight();
         int newGBSize;
@@ -146,7 +140,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
 
         this.arrow.setBounds((this.currGBX-this.arrow.getWidth()/2), (this.currGBY-this.arrow.getHeight()), this.arrow.getWidth(), this.arrow.getHeight());
 
-        animateTile();
+        drawTiles();
     }
 
     public void addTileToLayout(Tile tile) {
@@ -168,7 +162,7 @@ public class LayoutHandler extends JPanel implements ComponentListener {
     *   Function to handle component resizing of Tiles either
     *   when the window changes size or when Tiles are moved.
     */
-    public void animateTile() {
+    public void drawTiles() {
         Component[] tmp = this.layeredPane.getComponentsInLayer(0);
 
         for(Component curr : tmp) {
@@ -197,6 +191,21 @@ public class LayoutHandler extends JPanel implements ComponentListener {
                 this.layeredPane.add(curr, TILE_LAYER);
             }
         }
+
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void drawTile(Tile tile, int x, int y) {
+        standardSet(tile);
+
+        int recSize = this.gb.getRecSize();
+        int tileX = this.currGBX + this.gb.getStartX() + x + 15;
+        int tileY = this.currGBY + this.gb.getStartY() + y + 15;
+
+        tile.setBounds(tileX, tileY, recSize-10, recSize-10);
+
+        this.layeredPane.add(tile, TILE_LAYER);
 
         this.revalidate();
         this.repaint();

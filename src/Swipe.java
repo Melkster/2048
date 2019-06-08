@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.sound.sampled.*;
 
+import java.util.concurrent.TimeUnit;
+
 /*
 *   Class that constructs a Swiping action.
 *   These actions are put into the stack.
@@ -17,14 +19,16 @@ public class Swipe implements Command  {
     private ArrayList<Tile> collided = new ArrayList<Tile>();
 
     private Settings st;
+    private LayoutHandler lh;
 
     /*
     *   Base Constructor
     */
-    public Swipe(Direction direction, State state, Settings theST) {
+    public Swipe(Direction direction, State state, Settings theST, LayoutHandler lh) {
         this.direction = direction;
         this.newState = state;
         this.st = theST;
+        this.lh = lh;
 
         try {
             this.previousState = newState.clone();
@@ -45,7 +49,16 @@ public class Swipe implements Command  {
                 if (direction == Direction.LEFT || direction == Direction.UP) {
                     push(newState.getTile(column, row), newState);
                 } else if (direction == Direction.RIGHT || direction == Direction.DOWN) {
-                    push(newState.getTile(size - column - 1, size - row - 1), newState);
+                    Tile tile = newState.getTile(size - column - 1, size - row - 1);
+                    try {
+                        Tile oldTile = tile.clone();
+                        push(tile, newState);
+                        if (!(tile instanceof Void)) {
+                            // animate(oldTile, tile);
+                        };
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -75,6 +88,30 @@ public class Swipe implements Command  {
 
     public boolean stateChanged() {
         return !(newState.equals(previousState));
+    }
+
+    /**
+     * Animates a Tile from `oldTile`'s position, to its new (current) position
+     * `newTile`.
+     */
+    private void animate(Tile oldTile, Tile newTile) {
+        int tileSize = lh.gb.getRecSize();
+        int x = oldTile.getTileX(tileSize);
+        int y = oldTile.getTileY(tileSize);
+        int newX = newTile.getX();
+        lh.drawTile(oldTile, oldTile.getTileX(tileSize), oldTile.getTileY(tileSize));
+        while (x < newX - 10) { // TODO: remove hard coded value
+            lh.drawTile(oldTile, x, y);
+            x++;
+
+            // TODO: control the animation speed
+            try {
+                Thread.sleep(4);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        // lh.drawTiles();
     }
 
     /**

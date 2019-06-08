@@ -41,7 +41,7 @@ public class TutorialScreen extends JLabel {
         int height = this.getHeight();
 
         Graphics2D g2d = (Graphics2D) g;
-        
+
         // Set the desired font if different from default font
         g2d.setFont(new Font("Serif", Font.PLAIN, 20));
 
@@ -93,6 +93,5 @@ public class TutorialScreen extends JLabel {
 
         g2d.drawString(txt3, valueX2, valueY2);
         g2d.drawString(txt4, valueX3, valueY3);
-       
     }
 }
