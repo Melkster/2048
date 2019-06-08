@@ -10,6 +10,8 @@ import javax.sound.sampled.LineEvent.Type;
 import java.util.concurrent.TimeUnit;
 
 
+import java.util.concurrent.TimeUnit;
+
 /*
 *   Class that constructs a Swiping action.
 *   These actions are put into the stack.
