@@ -1,9 +1,14 @@
 package src;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.sound.sampled.*;
+import javax.sound.sampled.LineEvent.Type;
+
+import java.util.concurrent.TimeUnit;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -64,7 +69,12 @@ public class Swipe implements Command  {
         }
         collided.clear();
         if (this.st.getSound()) {
-            playSound("src/sounds/swipe-sound2.wav");
+            try {
+                playSound("src/sounds/swipe-sound2.wav");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -168,19 +178,46 @@ public class Swipe implements Command  {
     }
 
     /*
-    *   Function to play a sound when a Swipe action is executed
+    *   Function to play a sound when a Swipe action is executed.
     */
-    private void playSound(String soundFile) {
+    public static void playSound(String soundFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
+        class AudioListener implements LineListener {
+           private boolean done = false;
+
+            @Override
+            public synchronized void update(LineEvent event) {
+                Type eventType = event.getType();
+                if (eventType == Type.STOP || eventType == Type.CLOSE) {
+                    done = true;
+                    notifyAll();
+                }
+            }
+
+            public synchronized void waitUntilDone() throws InterruptedException {
+                while (!done) {
+                    wait();
+                }
+            }
+        }
+
         File f = new File("./" + soundFile);
-        Clip clip;
-        AudioInputStream audioIn;
+        AudioListener listener = new AudioListener();
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f.toURI().toURL());
         try {
-            audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
-            clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            clip.start();
+            Clip clip = AudioSystem.getClip();
+            clip.addLineListener(listener);
+            clip.open(audioInputStream);
+            try {
+                clip.start();
+                listener.waitUntilDone();
+            } finally {
+                clip.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
+
+        } finally {
+            audioInputStream.close();
         }
     }
 }

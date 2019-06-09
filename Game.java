@@ -190,6 +190,9 @@ public class Game extends JFrame implements MouseListener, KeyListener {
         commandManager.executeCommand(swipe);
         if (swipe.stateChanged()) {
             commandManager.executeCommand(new SpawnTile(this.gb.state, this.lh));
+            if (gameOver()) {
+                System.out.println("Game over! Press 'N' to start a new game.");
+            }
         } else commandManager.undoCommand();
     }
 
@@ -365,7 +368,7 @@ public class Game extends JFrame implements MouseListener, KeyListener {
     *   A loss should occur when the GameBoard is full and no,
     *   actions are possible.
     */
-    public boolean checkForWin() {
+    public boolean gameOver() {
         if (!gb.state.hasEmptyTile()) {
             for (Direction d : Direction.values()) {
                 commandManager.executeCommand(new Swipe(d, gb.state, this.st, this.lh));
